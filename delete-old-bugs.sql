@@ -22,4 +22,4 @@
 -- closed bugs which are older than a week from the database.
 --
 
-DELETE FROM `bugs` WHERE `type` == 1 AND TIMESTAMPDIFF(DAY, `last_changed`, NOW()) > 7;
+DELETE FROM `bugs` WHERE `type` = 1 AND TIMESTAMPDIFF(DAY, `last_changed`, NOW()) > 7;
