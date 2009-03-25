@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#
+# Copyright 2009 Christoph Böhme
+#
+# This file is part of Openstreetbugs.
+#
+# Openstreetbugs is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Openstreetbugs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Openstreetbugs.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import MySQLdb
+import cgi
+import re
+
+
+#
+# DATABASE CONFIGURATION
+#
+_db_host = "localhost"
+_db_dbname = "osb"
+_db_user = "osb"
+_db_password = "PASSWORD"
+
+
+def main():
+	print "Content-type: text/html\n"
+	form = cgi.FieldStorage()
+
+	values = {}
+	values["id"] = form.getfirst("id", "")
+
+	# Check that parameters have a valid format:
+	if not re.match(r"^\d+$", values["id"]):
+		print "invalid or missing id"
+		return
+	
+	conn = MySQLdb.connect(_db_host, user=_db_user, passwd=_db_password, db=_db_dbname)
+	curs = conn.cursor()
+	curs.execute("UPDATE bugs SET type = 1, last_changed = NOW() WHERE id = %(id)s and type = 0", values)
+	conn.commit()
+
+	print "bug closed"
+
+main()

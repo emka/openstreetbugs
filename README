@@ -1,0 +1,151 @@
+OPENSTREETBUGS
+
+The concept of Openstreetbugs and the orignal software has been developed by
+Xavier. The code can be seen in action on http://openstreetbugs.appspot.com/.
+When I set up a http://www.mappa-mercia.org/ I wanted to integrate
+Openstreetbugs into this website and so I started to adept Xavier's javascript
+code. In order to test my modifications without polluting the "official"
+database with test bugs I also wrote my own very simple server-side scripts.
+
+Since there has been some interest in the source code of Openstreetbugs I
+decided to bundle the modified client-side code and my still very simple
+server-side scripts with some documentation and publish them.
+
+This is still a very simple version of a bugtracker for OpenStreetMap. However,
+I hope that the availability of its source code will help to develop a more
+elaborate version.
+
+The source-code of this version of Openstreetbugs is distributed under the
+terms of GPLv3.
+
+
+The Openstreetbugs Server-Side
+
+The server-side of Openstreetbugs is very simple and consists only of a
+database table containing the bug reports and four cgi-scripts to access this
+table. When you set-up Openstreetbugs you can either deploy your own database
+or you can submit bugs to someone else's database. Deploying your own
+bugtracker is a good idea if you want to collect bugs which are only relevant
+for the users of your website. In all other cases you should consider
+submitting bugs from your website to a central bugtracker to keep all bug
+reports in one place. At the moment Xavier's original Openstreetbugs
+application on appspot acts as the central bugtracker for OpenStreetMap.
+However, do to load restrictions on appspot you need to talk to Xavier (user
+Xav on OpenStreetMap) before submitting and retrieving bugs from his database.
+
+The next to subsections describe how to configure Openstreetbugs in each of the
+two scenarios.
+
+
+Setting-up Your Own Openstreetbugs Service
+
+The cgi-scripts distributed with this release of Openstreetbugs are written in
+python and store the bug reports in a mysql database.  I have tested them with
+MySQL 5.0, Python 2.5.7 and the mysql-python module 1.2.2.  Your webserver 
+needs to be able to run python programs as cgi-scripts.
+
+The following steps describe how to install the server-side scripts on your 
+webserver:
+
+1. Execute the sql statements in create-database.sql on your mysql server to
+   create a database named osb and a table named bugs.  You can change the name
+   of the database or add the table to a different database.  However, the name
+   of the table and the columns must not be changed.
+
+2. Copy the cgi-scripts in osb-server/ to a location on your webserver where
+   execution of cgis is enabled (probably something like /cgi-bin/).  
+
+3. Open all four files in your favourite text editor and change the variables
+   _db_host, _db_dbname, _db_user, _db_password to match your database
+   configuration.
+
+4. That's all.  You can test your installation by invoking addPOIexec from a 
+   webbrowser like this:
+
+       http://example.com/cgi-path/addPOIexec?lon=11&lat=52&text=FirstBug
+
+   This will add a new bug to your database.
+
+Please note that the scripts have not been tested very much and you might want
+to have a good look on them (they are very short) before using them in a
+production environment.
+
+
+Removing Closed Bugs
+
+If you want to delete closed bugs after a while you should set-up your cron
+daemon to execute the sql statement in delete-closed-bugs.sql from time to
+time. This will remove all closed bugs which are older than a week from the
+database.
+
+
+Submitting Bugs to Another Bugtracker
+
+The Openstreetbugs client-side javascripts submits changes by making  POST
+requests via ajax.  Due to security restrictions in browsers these requests are
+only allowed to the same server which served the main webpage.  In order to
+allow Openstreetbugs to submit bugs to a database on a different server you
+have to configure your server so that it relays all requests from the
+client-side javascript to a different server. With the Apache webserver this is
+easily done by configuring a reverse proxy. The following code snippet shows
+how to do this:
+
+# This goes in the main config and enables proxy functionality:
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+
+# This goes in the virtual host configuration and configures Apache to relay
+# all requests within /osb-proxy/ to openstreetbugs.appspot.com:
+<IfModule proxy_module>
+    ProxyPass /osb-proxy/ http://openstreetbugs.appspot.com/
+    ProxyPassReverse /osb-proxy/ http://openstreetbugs.appspot.com/
+</IfModule>
+
+I also recommend you read the apache docs on mod_proxy because the module can
+be configured to do stuff that is potentially dangerous for your network and
+the internet in general if not done correctly:
+http://httpd.apache.org/docs/2.2/mod/mod_proxy.html
+
+Please also note that you need to talk to Xavier (user Xav on OpenStreetMap)
+before submitting bugs to his service.
+
+If you have no access to the configuration of your webserver or if your
+webserver cannot act as a proxy you can use cgi-scripts to relay the
+client-side requests to a different server.  However, such scripts are not
+included in this distribution (yet).  If you write them feel free to contact me
+and I will happily add them to this package :-)
+
+
+Client-side
+
+Once you sorted out the server-side of Openstreetbugs you can install the
+client-side. 
+
+The client side code is in the osb/ folder of this package. Copy this folder to
+the top-level directory of your website.  If you want to place it somewhere
+else or if you want to name it differently you have to update the osb_img_path
+variable in openstreetmap.js accordingly.
+
+In the example/ folder you find a very simple example of how to add
+Openstreetbugs support to a website.  All you need to do is linking
+openstreetbugs.js and openstreetbugs.css to your website and then call
+init_openstreetbugs once the map is created.  init_openstreetbugs takes to
+parameters:  The first the OpenLayers.Map object to which Openstreetbugs support
+shall be added and the second one is either the path on the server where the
+server-side scripts live or the local path configured in the proxy set-up.
+
+The stylesheets definitions in openstreetbugs.css can be changed to fit the
+looks of your website.  More elaborate change to the layout can be made by
+changing the html markup defined in openstreetbugs.js.
+
+
+Bugs
+
+Please have a look at the BUGS file. There are some bugs in this software :-)
+
+
+Contact
+
+If you have any questions or comments please contact:
+
+	christoph@b3e.net

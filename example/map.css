@@ -1,0 +1,30 @@
+/* 
+ * This file defines the position and style of the div which contains the map.
+ */
+
+
+body
+{
+	background-color: #505050;
+	color: black;
+}
+
+#map
+{
+	position: absolute;
+
+	left: 5px;
+	top: 5px;
+	right: 5px;
+	bottom: 5px;
+
+	border: 1px solid black;
+
+	background-color: #cbced5;
+}
+
+/* For some bizarre reason the slider image is having an top offset of 6px which
+ * results in a displacement of the slider on the zoombar. Setting top to -6px 
+ * solves this issue. However it should not be neccessary in the first place!
+ */
+img[src="http://openlayers.org/api/img/slider.png"]  { top: -6px; }

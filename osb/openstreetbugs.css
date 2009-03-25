@@ -1,0 +1,183 @@
+/*
+ * Copyright 2009 Christoph Böhme
+ *
+ * This file is part of Openstreetbugs.
+ *
+ * Openstreetbugs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Openstreetbugs is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Openstreetbugs.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+/*
+ * This file defines the style of the contents of the popups created by
+ * Openstreetbugs. You can change it to fit the style of Openstreetbugs
+ * with your website. If changing the css styles is not sufficient you can
+ * find the html markup for the popups in openstreetbugs.js
+ */
+
+
+.olFramedCloudPopupContent
+{
+	max-width: 380px;
+
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+
+	overflow: auto;
+
+	font-size: small;
+	font-family: sans-serif;
+}
+
+.olFramedCloudPopupContent a:link,
+.olFramedCloudPopupContent a:visited
+{
+	border-bottom: 1px dotted #c0c0c0;
+	text-decoration: none;
+}
+
+.olFramedCloudPopupContent a:link  { color: #990000; }
+.olFramedCloudPopupContent a:visited  { color: #500000; }
+
+.olFramedCloudPopupContent a:link:hover,
+.olFramedCloudPopupContent a:visited:hover
+{
+	border-bottom: 1px solid #c0c0c0;
+	color: red;
+}
+
+.olFramedCloudPopupContent a:link:focus
+.olFramedCloudPopupContent a:visited:focus
+	{ outline: 1px dotted #c0c0c0; }
+
+.olFramedCloudPopupContent a:link:active,
+.olFramedCloudPopupContent a:visited:active
+{
+	border-bottom: 1px solid #f0f0f0;
+	outline: 1px solid #c0c0c0;
+	color: red;
+}
+
+.olFramedCloudPopupContent h1
+{
+	margin-top: 0px;
+	margin-bottom: 7px;
+
+	font-size: medium;
+	color: #176bc1;
+}
+
+.olFramedCloudPopupContent p
+{
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+.olFramedCloudPopupContent p.Comment
+{
+	margin-top: 5px;
+	margin-left: 15px;
+}
+
+.olFramedCloudPopupContent p.Note
+{
+	margin-top: 7px;
+	padding-top: 3px;
+
+	border-top: solid 1px gray;
+
+	font-size: x-small;
+}
+
+.olFramedCloudPopupContent form+p
+{
+	margin-top: 15px;
+	padding-top: 10px;
+
+	border-top: solid 1px gray;
+}
+
+
+.olFramedCloudPopupContent ul
+{
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 10px;
+	margin-bottom: 0px;
+	
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 5px;
+	padding-bottom: 0px;
+
+	border-top: solid 1px gray;
+
+	text-align: center;
+}
+
+.olFramedCloudPopupContent ul li
+{
+	display: inline;
+
+	margin-left: 8px;
+	margin-right: 8px;
+
+	padding: 0px;
+}
+
+.olFramedCloudPopupContent form
+{
+	margin-top: 10px;
+	margin-bottom: 0px;
+}
+
+.olFramedCloudPopupContent form.NewComment
+{
+	padding-top: 5px;
+
+	border-top: solid 1px gray;
+}
+
+.olFramedCloudPopupContent form div
+{
+	margin-top: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.olFramedCloudPopupContent form div.FormFooter
+{
+	margin-top: 15px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+
+.olFramedCloudPopupContent span.InputLabel
+{
+	display: inline-block;
+
+	min-width: 110px;
+	margin-right: 10px;
+}
+
+.olFramedCloudPopupContent input[type=text]  { min-width: 190px; }
+
+.olFramedCloudPopupContent input[type=button]
+{
+	min-width: 75px;
+
+	margin-left: 3px;
+	margin-right: 3px;
+}
