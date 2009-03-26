@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#
+# Copyright 2009 Christoph Böhme
+# Copyright 2009 Mitja Kleider
+#
+# This file is part of Openstreetbugs.
+#
+# Openstreetbugs is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Openstreetbugs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Openstreetbugs.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import MySQLdb
+import cgi
+import re
+
+import db_config # DATABASE CONFIGURATION
+
+def main():
+	print "Content-type: application/xml"
+	print "Content-Disposition: attachment; filename=\"OpenStreetBugs.gpx\"\n"
+	
+	print """<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="OpenStreetBugs" version="1.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">"""
+	
+	
+	form = cgi.FieldStorage()
+	
+	values = {}
+	values["b"] = form.getfirst("b", "")
+	values["t"] = form.getfirst("t", "")
+	values["l"] = form.getfirst("l", "")
+	values["r"] = form.getfirst("r", "")
+	
+	# Check that parameters have a valid format:
+	coord_exp = re.compile(r"^-?\d{1,3}(\.\d+)?$")
+	for k, v in values.iteritems():
+		if not coord_exp.match(v):
+			print "<!-- invalid or missing %s -->" % k
+			return
+		else:
+			values[k] = float(v)
+	
+	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
+	curs = conn.cursor()
+	curs.execute("SELECT * FROM bugs WHERE %(b)s <= lat and lat <= %(t)s and %(l)s <= lon and lon <= %(r)s ORDER BY last_changed DESC LIMIT 1000", values)
+	for c in curs:
+		print "<wpt lat=\"%f\" lon=\"%f\"><desc>%s</desc></wpt>" % c[1:4]
+	
+	print "</gpx>"
+
+main()
