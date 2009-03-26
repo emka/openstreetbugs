@@ -343,7 +343,7 @@ function get_xml(url, str, on_finished)
  */
 function refresh_osb()
 {
-	if (refresh_osb.call_count === undefined)
+	if (refresh_osb.call_count == undefined)
 		refresh_osb.call_count = 0;
 	else
 		++refresh_osb.call_count;
