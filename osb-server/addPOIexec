@@ -25,13 +25,7 @@ import cgi
 import re
 
 
-#
-# DATABASE CONFIGURATION
-#
-_db_host = "localhost"
-_db_dbname = "osb"
-_db_user = "osb"
-_db_password = "PASSWORD"
+import db_config # DATABASE CONFIGURATION
 
 
 def main():
@@ -57,7 +51,7 @@ def main():
 
 	values["text"] = cgi.escape(values["text"], True)
 
-	conn = MySQLdb.connect(_db_host, user=_db_user, passwd=_db_password, db=_db_dbname)
+	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	curs = conn.cursor()
 	curs.execute("INSERT INTO bugs SET lat = %(lat)s, lon = %(lon)s, text = %(text)s, type = 0, last_changed = NOW()", values)
 	conn.commit()

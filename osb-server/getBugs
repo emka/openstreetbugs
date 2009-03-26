@@ -24,15 +24,7 @@ import MySQLdb
 import cgi
 import re
 
-
-#
-# DATABASE CONFIGURATION
-#
-_db_host = "localhost"
-_db_dbname = "osb"
-_db_user = "osb"
-_db_password = "PASSWORD"
-
+import db_config # DATABASE CONFIGURATION
 
 def main():
 	print "Content-type: text/javascript\n"
@@ -53,7 +45,7 @@ def main():
 		else:
 			values[k] = float(v)
 	
-	conn = MySQLdb.connect(_db_host, user=_db_user, passwd=_db_password, db=_db_dbname)
+	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	curs = conn.cursor()
 
 	rate = 0.3/abs(values["t"]-values["b"])*abs(values["l"]-values["r"])
@@ -61,7 +53,6 @@ def main():
 	values["rate"] = rate
 	curs.execute("SELECT * FROM bugs WHERE %(b)s <= lat and lat <= %(t)s and %(l)s <= lon and lon <= %(r)s ORDER BY last_changed DESC LIMIT 100", values)
 	for c in curs:
-		# comments may contain single quotes which must be escaped
 		print "putAJAXMarker(%i, %f, %f, '%s', %i);" % (c[0], c[1], c[2], c[3].replace("'", "\\'"), c[4])
 
 main()
