@@ -61,6 +61,7 @@ def main():
 	values["rate"] = rate
 	curs.execute("SELECT * FROM bugs WHERE %(b)s <= lat and lat <= %(t)s and %(l)s <= lon and lon <= %(r)s and RAND() < %(rate)s", values)
 	for c in curs:
-		print "putAJAXMarker(%i, %f, %f, '%s', %i);" % c[0:5]
+		# comments may contain single quotes which must be escaped
+		print "putAJAXMarker(%i, %f, %f, '%s', %i);" % (c[0], c[1], c[2], c[3].replace("'", "\\'"), c[4])
 
 main()
