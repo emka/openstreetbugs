@@ -58,7 +58,8 @@ function escape_html(str)
  */
 function set_cookie(name, value)
 {
-	document.cookie = name+"="+escape(value)+";";
+	var expires = (new Date((new Date()).getTime() + 604800000)).toGMTString(); // one week from now
+	document.cookie = name+"="+escape(value)+";expires="+expires+";";
 }
 
 /* Retrieve the value of cookie "name".
