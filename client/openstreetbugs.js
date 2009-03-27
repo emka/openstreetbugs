@@ -354,8 +354,36 @@ function refresh_osb()
 	t = y2lat(bounds[3]);
 	l = x2lon(bounds[0]);
 	r = x2lon(bounds[2])
+
+	refresh_sidebar();
+
 	var params = { "b": b, "t": t, "l": l, "r": r, "ucid": refresh_osb.call_count };
 	make_request("getBugs", params);
+}
+
+/* shorten coordinate to 5 digits in decimal fraction */
+function shorter_coord(coord)
+{
+	return Math.round(coord*100000)/100000;
+}
+
+function refresh_sidebar()
+{
+	var zoom = map.getZoom();
+	coords = map.getCenter();
+	var lon = shorter_coord(x2lon(coords.lon));
+	var lat = shorter_coord(y2lat(coords.lat));
+	if (zoom > 10) {
+		document.getElementById("rsslink").style.display = "list-item";
+		document.getElementById("rsslink").innerHTML = "<a href='"+osb_server_path+"getRSSfeed?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>RSS feed</a>";
+		document.getElementById("gpxlink").style.display = "list-item";
+		document.getElementById("gpxlink").innerHTML = "<a href='"+osb_server_path+"getGPX?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>GPX export</a>";
+	} else {
+		document.getElementById("gpxlink").style.display = "none";
+		document.getElementById("rsslink").style.display = "none";
+	}
+	document.getElementById("permalink").innerHTML = "<a href='?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>Permalink</a>";
+	document.getElementById("geofabrik").innerHTML = "<a href='http://tools.geofabrik.de/map/?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>Geofabrik Map</a>";
 }
 
 /* Check if a bug has been downloaded already.
