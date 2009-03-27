@@ -2,12 +2,13 @@ OPENSTREETBUGS
 
 The concept of Openstreetbugs and the orignal software has been developed by
 Xavier. The code can be seen in action on http://openstreetbugs.appspot.com/.
-When I set up a http://www.mappa-mercia.org/ I wanted to integrate
-Openstreetbugs into this website and so I started to adept Xavier's javascript
-code. In order to test my modifications without polluting the "official"
-database with test bugs I also wrote my own very simple server-side scripts.
 
-Since there has been some interest in the source code of Openstreetbugs I
+When Christoph set up a http://www.mappa-mercia.org/ he wanted to integrate
+Openstreetbugs into this website and so he started to adept Xavier's javascript
+code. In order to test my modifications without polluting the "official"
+database with test bugs he also wrote my own very simple server-side scripts.
+
+Since there has been some interest in the source code of Openstreetbugs he
 decided to bundle the modified client-side code and my still very simple
 server-side scripts with some documentation and publish them.
 
@@ -52,7 +53,7 @@ webserver:
    of the database or add the table to a different database.  However, the name
    of the table and the columns must not be changed.
 
-2. Copy the cgi-scripts in osb-server/ to a location on your webserver where
+2. Copy the cgi-scripts in api/0.1/ to a location on your webserver where
    execution of cgis is enabled (probably something like /cgi-bin/).  
 
 3. Open all four files in your favourite text editor and change the variables
@@ -121,10 +122,10 @@ Client-side
 Once you sorted out the server-side of Openstreetbugs you can install the
 client-side. 
 
-The client side code is in the osb/ folder of this package. Copy this folder to
+The client side code is in the client/ folder of this package. Copy this folder to
 the top-level directory of your website.  If you want to place it somewhere
 else or if you want to name it differently you have to update the osb_img_path
-variable in openstreetmap.js accordingly.
+variable in openstreetbugs.js accordingly.
 
 In the example/ folder you find a very simple example of how to add
 Openstreetbugs support to a website.  All you need to do is linking
@@ -148,4 +149,4 @@ Contact
 
 If you have any questions or comments please contact:
 
-	christoph@b3e.net
+	christoph@b3e.net, mitja@kleider.name

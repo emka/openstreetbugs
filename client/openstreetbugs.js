@@ -181,7 +181,7 @@ function popup_close_bug(bug_or_id)
 
 /* base url for images used by openstreetbugs:
  */
-var osb_img_path = "/osb/";
+var osb_img_path = "/client/";
 
 /* Map object to which openstreetbugs has been added: 
  */

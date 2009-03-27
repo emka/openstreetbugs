@@ -5,7 +5,7 @@
 	<title>Openstreetbugs Example</title>
 
 	<!-- Tell the browser that this page has a "favicon" -->
-	<link rel="icon" type="image/png" href="../osb/open_bug_marker.png">
+	<link rel="icon" type="image/png" href="../client/open_bug_marker.png">
 
 	<!-- These lines add everything that's neccessary to show a slippy map 
 	     with osm mapnik tiles. The details on how this works can be found on
@@ -19,8 +19,8 @@
 	<!-- The following two lines add the javascript for openstreetbugs and a
 	     stylesheet which polishes the popups displayed by openstreetbugs.
 	-->
-	<link rel="stylesheet" href="../osb/openstreetbugs.css" type="text/css">
-	<script src="../osb/openstreetbugs.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="../client/openstreetbugs.css" type="text/css">
+	<script src="../client/openstreetbugs.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
 		/* This function is called once the page is loaded to
@@ -34,7 +34,7 @@
 			// Add openstreetbugs to the map. The function takes two arguments: The first one must
 			// reference an Openlayers.Map object, the second one specifies the path on the server
 			// which contains the server side scripts.
-			init_openstreetbugs(map, "/osb-server/");
+			init_openstreetbugs(map, "/api/0.1/");
 		}
 	</script>
 </head>
