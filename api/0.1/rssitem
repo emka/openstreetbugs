@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#
+# Copyright 2009 Christoph Böhme, Mitja Kleider
+#
+# This file is part of Openstreetbugs.
+#
+# Openstreetbugs is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Openstreetbugs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Openstreetbugs.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import MySQLdb
+import cgi
+import re
+
+import db_config # DATABASE CONFIGURATION
+
+def main():
+	server_uri = "http://openstreetbugs.arrangedchaos.net/"
+	api_uri = server_uri+"api/0.1/"
+
+	print "Content-type: application/rss+xml\n"
+	
+	print """<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+	<title>OpenStreetBugs</title>
+	<link>"""+server_uri+"""</link>
+	<description>bug details</description>"""
+	
+	form = cgi.FieldStorage()
+	id = form.getfirst("id", "")
+	
+	# Check that parameter has a valid format:
+	coord_exp = re.compile(r"^-?\d{1,}?$")
+	if not coord_exp.match(id):
+		print "<!-- invalid or missing id -->"
+		return
+	else:
+		id = long(id)
+	
+	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
+	curs = conn.cursor()
+	curs.execute("SELECT lon, lat, text, type, last_changed FROM bugs WHERE id = %s LIMIT 1", id)
+	for c in curs:
+		if c[3] == 1:
+			type = "closed"
+		else:
+			type = "open"
+
+		#TODO: strip "<hr />" from c[2]
+		print "<item><title>%s bug</title><description>%s</description><link>%s?lat=%s&amp;lon=%s&amp;zoom=18</link><guid>%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, c[2], server_uri, c[1], c[0], id, c[4], c[1], c[0])
+	print "</channel></rss>"
+
+main()
