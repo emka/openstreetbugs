@@ -25,6 +25,8 @@ function init_map(div_id, lon, lat, zoom)
 
 	map.setCenter(new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()), zoom);
 
+	map.addControl(new OpenLayers.Control.Permalink());
+
 	return map;
 }
 
