@@ -350,10 +350,10 @@ function refresh_osb()
 		++refresh_osb.call_count;
 	
 	bounds = osb_map.getExtent().toArray();
-	b = y2lat(bounds[1]);
-	t = y2lat(bounds[3]);
-	l = x2lon(bounds[0]);
-	r = x2lon(bounds[2])
+	b = shorter_coord(y2lat(bounds[1]));
+	t = shorter_coord(y2lat(bounds[3]));
+	l = shorter_coord(x2lon(bounds[0]));
+	r = shorter_coord(x2lon(bounds[2]));
 
 	refresh_sidebar();
 
