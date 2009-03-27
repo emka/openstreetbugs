@@ -1,9 +1,5 @@
 var map = null;
 
-/* This function creates a slippy map in div_id with an osm mapnik 
- * base layer centred on lon, lat at zoom. It returns a reference
- * to the new map object.
- */
 function init_map(div_id, lon, lat, zoom)
 {
 	map = new OpenLayers.Map(div_id, {
@@ -11,7 +7,7 @@ function init_map(div_id, lon, lat, zoom)
 			new OpenLayers.Control.Navigation(),
 			new OpenLayers.Control.PanZoomBar(),
 			new OpenLayers.Control.ScaleLine(),
-			new OpenLayers.Control.Attribution()
+			new OpenLayers.Control.LayerSwitcher()
 		],
 		maxResolution: 156543.0339,
 		numZoomLevels: 20,
@@ -20,13 +16,22 @@ function init_map(div_id, lon, lat, zoom)
 		displayProjection: new OpenLayers.Projection("EPSG:4326")
 	});
 
-	var mapnik = new OpenLayers.Layer.OSM.Mapnik("OpenStreetMap", {
-		displayOutsideMaxExtent: true,
-		wrapDateLine: true
-	});
-	map.addLayer(mapnik);
+	var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+	map.addLayer(layerMapnik);
+	var layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+	map.addLayer(layerCycleMap);
+	var layerTilesAtHome = new OpenLayers.Layer.OSM.Osmarender("Osmarender");
+	map.addLayer(layerTilesAtHome);
 
 	map.setCenter(new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()), zoom);
 
+	map.addControl(new OpenLayers.Control.Permalink());
+
 	return map;
+}
+
+function init()
+{
+        var map = init_map('map', 16.3, 46.53, 4);
+        init_openstreetbugs(map, "/api/0.1/");
 }
