@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright 2009 Christoph Böhme
+# Copyright 2009 Christoph Böhme, Mitja Kleider
 #
 # This file is part of Openstreetbugs.
 #
@@ -23,6 +23,8 @@
 import MySQLdb
 import cgi
 import re
+import urllib2
+from xml.dom import minidom
 
 
 import db_config # DATABASE CONFIGURATION
@@ -51,11 +53,25 @@ def main():
 
 	values["text"] = cgi.escape(values["text"], True)
 
+	values["nearbyplace"] = "Unknown"
+	url = "http://ws.geonames.org/findNearbyPlaceName?lat=%f&lng=%f" % (lat, lon)
+	try:
+		response = urllib2.urlopen(url)
+	except urllib2.URLError, e:
+		pass
+	else:
+			dom = minidom.parseString(response.read())
+			name = dom.getElementsByTagName('name')[0].firstChild.data
+			country = dom.getElementsByTagName('countryCode')[0].firstChild.data
+			values["nearbyplace"] = "%s [%s]" % (name, country)
+
+
 	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	curs = conn.cursor()
-	curs.execute("INSERT INTO bugs SET lat = %(lat)s, lon = %(lon)s, text = %(text)s, type = 0, last_changed = NOW()", values)
+	curs.execute("INSERT INTO bugs SET lon = %(lon)s, lat = %(lat)s, text = %(text)s, type = 0, last_changed = NOW(), date_created = NOW(), nearby_plcace = %(nearbyplace)s", values)
 	conn.commit()
 
 	print "bug added";
+	#TODO result of original OSB: "ok\n%d" %id
 
 main()

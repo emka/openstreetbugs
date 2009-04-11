@@ -57,7 +57,7 @@ def main():
 	
 	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	curs = conn.cursor()
-	curs.execute("SELECT id, lon, lat, text, type, last_changed FROM bugs WHERE %(b)s <= lat and lat <= %(t)s and %(l)s <= lon and lon <= %(r)s ORDER BY last_changed DESC LIMIT 10", values)
+	curs.execute("SELECT id, lon, lat, text, type, last_changed, nearby_place FROM bugs WHERE %(b)s <= lat and lat <= %(t)s and %(l)s <= lon and lon <= %(r)s ORDER BY last_changed DESC LIMIT 10", values)
 	for c in curs:
 		if c[4] == 1:
 			type = "closed"
@@ -65,7 +65,7 @@ def main():
 			type = "open"
 
 		#TODO: strip "<hr />" from c[3]
-		print "<item><title>%s bug</title><description>%s</description><link>%srssitem?id=%s</link><guid>%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, c[3], api_uri, c[0], c[0], c[5], c[2], c[1])
+		print "<item><title>%s bug near %s</title><description>%s</description><link>%srssitem?id=%s</link><guid>%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, c[6], c[3], api_uri, c[0], c[0], c[5], c[2], c[1])
 	print "</channel></rss>"
 
 main()
