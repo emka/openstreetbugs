@@ -67,11 +67,10 @@ def main():
 
 
 	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
-	curs = conn.cursor()
-	curs.execute("INSERT INTO bugs SET lon = %(lon)s, lat = %(lat)s, text = %(text)s, type = 0, last_changed = NOW(), date_created = NOW(), nearby_place = %(nearbyplace)s", values)
+	cursor = conn.cursor()
+	cursor.execute("INSERT INTO bugs SET lon = %(lon)s, lat = %(lat)s, text = %(text)s, type = 0, last_changed = NOW(), date_created = NOW(), nearby_place = %(nearbyplace)s", values)
 	conn.commit()
 
-	print "bug added";
-	#TODO result of original OSB: "ok\n%d" %id
+	print "ok\n%d" %int(cursor.lastrowid)
 
 main()
