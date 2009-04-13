@@ -45,6 +45,6 @@ def main():
 	curs.execute("UPDATE bugs SET type = 1, last_changed = NOW() WHERE id = %(id)s and type = 0", values)
 	conn.commit()
 
-	print "bug closed"
+	print "ok"
 
 main()
