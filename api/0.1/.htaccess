@@ -1,3 +1,7 @@
 <Files db_config.py>
 deny from all
 </Files>
+<Files *>
+	SetHandler cgi-script
+</Files>
+Options +ExecCGI 
