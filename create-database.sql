@@ -1,5 +1,5 @@
 --
--- Copyright 2009 Christoph Böhme
+-- Copyright 2009 Christoph Böhme, Mitja Kleider
 --
 -- This file is part of Openstreetbugs.
 --
@@ -33,5 +33,7 @@ CREATE TABLE `bugs` (
 	`text` text,
 	`type` int(11) default NULL,
 	`last_changed` datetime default NULL,
+	`date_created` datetime default NULL,
+	`nearby_place` text,
 	PRIMARY KEY  (`id`)
 );
