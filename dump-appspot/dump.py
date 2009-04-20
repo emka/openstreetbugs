@@ -31,18 +31,31 @@ from xml.dom import minidom
 def parseBoolString(theString):
 	return theString[0]=='T'
 
-def writeBugs(first,last):
-	for i in range(first,last+1):
-		global current
-		current = i # enable retry if any error occurs
-		url = "http://openstreetbugs.appspot.com/getGPXitem?id=%d" % (i)
+def writeBugs(filename):
+	FILE = open(filename, "a")
+	for i in range(1,120000+1):
+		data = queryparseBug(i)
+		if len(data) is not 0:
+			# prepare MySQL query
+			sqlstr = """INSERT INTO bugs(id,lon,lat,text,type,last_changed,date_created,nearby_place) VALUES ("%(id)s","%(lon)s","%(lat)s","%(text)s","%(closed)s","%(datemodified)s","%(datecreated)s","%(nearbyplacename)s");\n""" % data
+			# write query to file
+			FILE.write(sqlstr.encode('utf-8'))
+		if i%1000 == 0:
+			# status report every 1000 bugs
+			print "----- %d ----- " % (i)
+	FILE.close()
+
+
+def queryparseBug(id):
+	url = "http://openstreetbugs.appspot.com/getGPXitem?id=%d" % (id)
+	try:
 		f = urllib.urlopen(url)
 		item = f.read()
+		data = {}
 		# sometimes returns empty string, check that or fail
 		if item != "":
 			dom = minidom.parseString(item.replace("&","&amp;"))
 			# read and store values
-			data = {}
 			data["lat"] = dom.getElementsByTagName('wpt')[0].attributes["lat"].value
 			data["lon"] = dom.getElementsByTagName('wpt')[0].attributes["lon"].value
 			data["id"] = dom.getElementsByTagName('name')[0].firstChild.data
@@ -54,28 +67,15 @@ def writeBugs(first,last):
 				data["nearbyplacename"] = dom.getElementsByTagName('nearbyplacename')[0].firstChild.data.replace('"','\\"')
 			else:
 				data["nearbyplacename"] = "Unknown"
-			# prepare MySQL query
-			sqlstr = """INSERT INTO bugs(id,lon,lat,text,type,last_changed,date_created,nearby_place) VALUES ("%(id)s","%(lon)s","%(lat)s","%(text)s","%(closed)s","%(datemodified)s","%(datecreated)s","%(nearbyplacename)s");\n""" % data
-			# write query to file
-			FILE.write(sqlstr.encode('utf-8'))
-		if i%1000 == 0:
-			# status report every 1000 bugs
-			print "----- %d ----- " % (i)
-
-
-today = datetime.date.today()
-filename = "OpenStreetBugsDump_%s.sql" % today
-FILE = open(filename, "a")
-print "starting download to %s" % filename
-
-
-current = 1 # global counter, used by writeBugs()
-while current < 120000:
-	try:
-		writeBugs(current,120000)
+		return data
 	except:
-		print "error at %d" % current
-		pass # try again
+		print "error at %d" % id
+		return queryparseBug(id)  # try again
 
-FILE.close()
-print "done."
+
+def main():
+	today = datetime.date.today()
+	filename = "OpenStreetBugsDump_%s.sql" % today
+	print "starting download to %s" % filename
+	writeBugs(filename)
+	print "done."
