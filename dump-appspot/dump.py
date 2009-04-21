@@ -79,3 +79,6 @@ def main():
 	print "starting download to %s" % filename
 	writeBugs(filename)
 	print "done."
+
+if __name__ == "__main__":
+	main()
