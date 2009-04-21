@@ -59,8 +59,9 @@ def main():
 		else:
 			type = "open"
 
-		#TODO: strip "<hr />" from c[2]
-		print "<item><title>%s bug</title><description>%s</description><link>%s?lat=%s&amp;lon=%s&amp;zoom=18</link><guid>%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, c[2], server_uri, c[1], c[0], id, c[4], c[1], c[0])
+		pubDate = c[4].strftime("%a, %d %b %Y %H:%M:%S GMT")
+		desc = c[2].replace("<hr />"," | ")
+		print "<item><title>%s bug</title><description>%s</description><link>%s?lat=%s&amp;lon=%s&amp;zoom=18</link><guid>%srssitem?id=%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, desc, server_uri, c[1], c[0], api_uri, id, pubDate, c[1], c[0])
 	print "</channel></rss>"
 
 main()
