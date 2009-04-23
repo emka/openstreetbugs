@@ -6,5 +6,4 @@
 - permalink with layer memory
 - in javascript: change projection to have only latlon
 - FAQ page
-- bug: /getPOIs?b=53.605046089383414&t=53.60524979876032&l=9.732690170076586&r=9.733033492830478
 - in javascript: replace the maximum of "popup" with "bubble" (AdBlock doesn't like popups)
