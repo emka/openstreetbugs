@@ -1,9 +1,0 @@
-- internationalization
-- in javascript: improve the poi cache (use objects?)
-- in javascript: improve the popups management (problem when editing 2 popups)
-- double-click Poi = get poi permalink
-- cookie for last location
-- permalink with layer memory
-- in javascript: change projection to have only latlon
-- FAQ page
-- in javascript: replace the maximum of "popup" with "bubble" (AdBlock doesn't like popups)

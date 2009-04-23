@@ -1,6 +1,0 @@
-- Openstreetbugs is not working at the international date line
-  is downloaded is quite poor
-- Bug markers are sometimes not adjusted to the new zoom 
-  level (this seems to happen if you zoom while bugs are being
-  downloaded)
-
