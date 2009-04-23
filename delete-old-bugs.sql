@@ -21,5 +21,7 @@
 -- Add this script to your cron daemon and call it once a day to remove
 -- closed bugs which are older than a week from the database.
 --
+-- NOTE: you may want to keep those bugs, they are not displayed anymore
+--
 
 DELETE FROM `bugs` WHERE `type` = 1 AND TIMESTAMPDIFF(DAY, `last_changed`, NOW()) > 7;
