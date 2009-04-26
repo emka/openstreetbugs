@@ -20,8 +20,7 @@
 # along with osb-relocation. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import time
-import datetime
+from datetime import datetime
 import urllib
 from xml.dom import minidom
 import MySQLdb
@@ -32,19 +31,19 @@ import db_config # DATABASE CONFIGURATION
 
 
 def str2datetime(str):
-	if str == "None": # unkown time in original database
-		return datetime.datetime(2007,11,11,11,11,11,11) # at that time OSB did not exist yet
-	elif str.find(".") != -1:
+	if str.find(".") != -1:
 		## for Python 2.6+ just use
-		# return datetime.datetime.strptime(str, "%Y-%m-%d %H:%M:%S.%f")
+		# return datetime.strptime(str, "%Y-%m-%d %H:%M:%S.%f")
 
 		## for Python below 2.6 use
 		p1, p2 = str.split(".", 1)
-		d = datetime.datetime.strptime(p1, "%Y-%m-%d %H:%M:%S")
+		d = datetime.strptime(p1, "%Y-%m-%d %H:%M:%S")
 		ms = int(p2.ljust(6,'0')[:6])
 		return d.replace(microsecond=ms)
+	elif str == "None": # unkown time in original database
+		return datetime(2007,11,11,11,11,11,11) # at that time OSB did not exist yet
 	else:
-		return datetime.datetime.strptime(str, "%Y-%m-%d %H:%M:%S")
+		return datetime.strptime(str, "%Y-%m-%d %H:%M:%S")
 
 
 def main():
@@ -72,7 +71,7 @@ def main():
 
 			lastchanged = str2datetime(data["datemodified"]).replace(microsecond=0)
 			if row["last_changed"] < lastchanged:
-				update["last_changed"] = datetime.datetime.isoformat(lastchanged, " ")
+				update["last_changed"] = datetime.isoformat(lastchanged, " ")
 
 			data["nearbyplacename"] = data["nearbyplacename"].encode('utf-8')
 			if row["nearby_place"] != data["nearbyplacename"]:
