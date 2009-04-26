@@ -22,7 +22,6 @@
 
 import time
 import datetime
-from datetime import datetime
 import urllib
 from xml.dom import minidom
 import MySQLdb
@@ -30,6 +29,22 @@ from MySQLdb.cursors import DictCursor
 
 from dump import parseBoolString, queryparseBug 
 import db_config # DATABASE CONFIGURATION
+
+
+def str2datetime(str):
+	if str == "None": # unkown time in original database
+		return datetime.datetime(2007,11,11,11,11,11,11) # at that time OSB did not exist yet
+	elif str.find(".") != -1:
+		## for Python 2.6+ just use
+		# return datetime.datetime.strptime(str, "%Y-%m-%d %H:%M:%S.%f")
+
+		## for Python below 2.6 use
+		p1, p2 = str.split(".", 1)
+		d = datetime.datetime.strptime(p1, "%Y-%m-%d %H:%M:%S")
+		ms = int(p2.ljust(6,'0')[:6])
+		return d.replace(microsecond=ms)
+	else:
+		return datetime.datetime.strptime(str, "%Y-%m-%d %H:%M:%S")
 
 
 def main():
@@ -55,6 +70,10 @@ def main():
 				text1.extend(missing)
 				update["text"] = "<hr />".join(text1)
 
+			lastchanged = str2datetime(data["datemodified"]).replace(microsecond=0)
+			if row["last_changed"] < lastchanged:
+				update["last_changed"] = datetime.datetime.isoformat(lastchanged, " ")
+
 			data["nearbyplacename"] = data["nearbyplacename"].encode('utf-8')
 			if row["nearby_place"] != data["nearbyplacename"]:
 				update["nearby_place"] = data["nearbyplacename"]
@@ -64,8 +83,8 @@ def main():
 				sqlstr = "UPDATE bugs SET "
 				for key in update:
 					sqlstr += key + "=\"" + update[key] + "\","
-				#sqlstr = sqlstr[:-1] # remove last comma
-				sqlstr += "last_changed = NOW() WHERE id = %d;\n" %row["id"]
+				sqlstr = sqlstr[:-1] # remove last comma
+				sqlstr += " WHERE id = %d;" %row["id"] # TODO add "\n" if you remove print
 				print sqlstr
 			# apply query to database
 	# fetch new bugs
