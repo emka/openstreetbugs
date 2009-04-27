@@ -95,9 +95,9 @@ def main():
 	# and original bugs will never reach that value
 	cursor.execute("SELECT MAX(id) FROM bugs WHERE id<500000;")
 	result = cursor.fetchone()
-	if result["MAX(id)"] < 120000:
+	if result["MAX(id)"] < 150000:
 		# fetch new bugs
-		for i in range(result["MAX(id)"]+1,120000+1):
+		for i in range(result["MAX(id)"]+1,150000+1):
 			data = queryparseBug(i)
 			if len(data) is not 0:
 				# prepare MySQL query
