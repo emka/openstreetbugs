@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#
+# Copyright 2009 Mitja Kleider
+#
+# This file is part of Openstreetbugs.
+#
+# Openstreetbugs is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Openstreetbugs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Openstreetbugs.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import MySQLdb
+import db_config # DATABASE CONFIGURATION
+
+def main():
+	server_uri = "http://openstreetbugs.arrangedchaos.net/"
+	api_uri = server_uri+"api/0.1/"
+
+	print "Content-type: application/rss+xml\n"
+	
+	print """<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+	<title>OpenStreetBugs</title>
+	<link>"""+server_uri+"""</link>
+	<description>last modified bugs in selected area</description>"""
+	
+	connection = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
+	cursor = connection.cursor()
+	cursor.execute("SELECT id, lon, lat, text, type, last_changed, nearby_place FROM bugs ORDER BY last_changed DESC LIMIT 10")
+	for row in cursor:
+		if row[4] == 1:
+			type = "closed"
+		else:
+			type = "open"
+
+		pubDate = row[5].strftime("%a, %d %b %Y %H:%M:%S GMT")
+		desc = row[3].replace("<hr />","\n")
+		print "<item><title>%s bug near %s</title><description>%s</description><guid>%srssitem?id=%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, row[6], desc, api_uri, row[0], pubDate, row[2], row[1])
+	print "</channel></rss>"
+
+main()
