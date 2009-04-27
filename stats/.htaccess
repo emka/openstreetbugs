@@ -1,0 +1,10 @@
+<Files db_config.py>
+deny from all
+</Files>
+<Files recentChanges>
+	SetHandler cgi-script
+</Files>
+AddHandler cgi-script .py
+Options +ExecCGI
+
+DirectoryIndex stats.py
