@@ -32,22 +32,22 @@ def main():
 	print """<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
-	<title>OpenStreetBugs</title>
+	<title>Recent Changes (OSB)</title>
 	<link>"""+server_uri+"""</link>
-	<description>last modified bugs in selected area</description>"""
+	<description>recent changes to the bug database</description>"""
 	
 	connection = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	cursor = connection.cursor()
 	cursor.execute("SELECT id, lon, lat, text, type, last_changed, nearby_place FROM bugs ORDER BY last_changed DESC LIMIT 10")
 	for row in cursor:
 		if row[4] == 1:
-			type = "closed"
+			type = "closed bug"
 		else:
-			type = "open"
+			type = "new comment"
 
 		pubDate = row[5].strftime("%a, %d %b %Y %H:%M:%S GMT")
-		desc = row[3].replace("<hr />","\n")
-		print "<item><title>%s bug near %s</title><description>%s</description><guid>%srssitem?id=%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, row[6], desc, api_uri, row[0], pubDate, row[2], row[1])
+		desc = row[3].replace("<hr />"," | ")
+		print "<item><title>%s (near %s)</title><description>%s</description><guid>%srssitem?id=%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, row[6], desc, api_uri, row[0], pubDate, row[2], row[1])
 	print "</channel></rss>"
 
 main()
