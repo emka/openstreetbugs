@@ -25,6 +25,7 @@ import urllib
 from xml.dom import minidom
 import MySQLdb
 from MySQLdb.cursors import DictCursor
+import sys # for sys.stderr.write
 
 from dump import parseBoolString, queryparseBug 
 import db_config # DATABASE CONFIGURATION
@@ -51,7 +52,8 @@ def main():
 	cursor = connection.cursor()
 	# get ids of open bugs and bugs which were closed less than a week ago
 	cursor.execute("SELECT id, text, last_changed, nearby_place FROM bugs WHERE type = 0 OR TIMESTAMPDIFF(DAY, `last_changed`, NOW()) <= 7")
-	for row in cursor:
+	result = cursor.fetchall()
+	for row in result:
 		# fetch bug from openstreetbugs.appspot.com
 		data = queryparseBug(row["id"])
 		if data: # dict is not empty
@@ -84,9 +86,28 @@ def main():
 					sqlstr += key + "=\"" + update[key] + "\","
 				sqlstr = sqlstr[:-1] # remove last comma
 				sqlstr += " WHERE id = %d;" %row["id"] # TODO add "\n" if you remove print
-				print sqlstr
-			# apply query to database
-	# fetch new bugs
+				# apply query to database
+				cursor.execute(sqlstr)
+				connection.commit()
 
+	# get the highest id in database
+	# this assumes that the new bugs only added to this database start at 500000
+	# and original bugs will never reach that value
+	cursor.execute("SELECT MAX(id) FROM bugs WHERE id<500000;")
+	result = cursor.fetchone()
+	if result["MAX(id)"] < 120001:
+		# fetch new bugs
+		for i in range(result["MAX(id)"],120001):
+			data = queryparseBug(i)
+			if len(data) is not 0:
+				# prepare MySQL query
+				sqlstr = """INSERT INTO bugs(id,lon,lat,text,type,last_changed,date_created,nearby_place) VALUES ("%(id)s","%(lon)s","%(lat)s","%(text)s","%(closed)s","%(datemodified)s","%(datecreated)s","%(nearbyplacename)s");""" % data
+				# apply query to database
+				cursor.execute(sqlstr)
+				connection.commit()
+	else:
+		# need to change range
+		sys.stderr.write("OSB synchronization error: bugcount in database is out of range.\nPlease update your script!\n")
+	
 
 main()
