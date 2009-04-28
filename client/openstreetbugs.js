@@ -163,16 +163,18 @@ function popup_add_comment(bug_or_id, nickname)
 
 /* Html markup for popups with a "mark as fixed" confirmation dialogue.
  */
-function popup_close_bug(bug_or_id)
+function popup_close_bug(bug_or_id, nickname)
 {
 	bug = bug_or_id instanceof Object ? bug_or_id : get_bug(bug_or_id);
 
 	var warning = '<h1>Mark Error as Fixed</h1><p>Do you really want to mark this error as fixed? The error will be deleted after a week.</p>';
 	var form_header = '<form><div><input type="hidden" name="id" value="'+bug.id+'"></div>';
+	var comment = '<div><span class="InputLabel">Your Comment:</span><input type="text" id="comment" name="text"></div>';
+	var nickname = '<div><span class="InputLabel">Your Nickname:</span><input type="text" id="nickname" value="'+(nickname ? nickname : 'NoName')+'"></div>';
 	var form_footer = '<div class="FormFooter"><input type="button" value="Yes" onclick="close_bug_submit('+bug.id+', this.form);"><input type="button" value="No" onclick="reset_popup('+bug.id+');"></div></form>';
 	var description = '<p><b>Description:</b> '+fix_markup(bug.text)+'</p>';
 
-	return warning+form_header+form_footer+description;
+	return warning+form_header+comment+nickname+form_footer+description;
 }
 
 
@@ -616,11 +618,12 @@ function add_comment_submit(id, form)
 function close_bug(id)
 {
 	osb_state = 4;
-	osb_current_feature.popup.setContentHTML(popup_close_bug(id));
+	osb_current_feature.popup.setContentHTML(popup_close_bug(id, get_cookie("osb_nickname")));
 }
 
 function close_bug_submit(id, form)
 {
+  add_comment_submit(id,form);
 	submit_form(form, "closePOIexec");
 	
 	for (var i in  osb_bugs)
