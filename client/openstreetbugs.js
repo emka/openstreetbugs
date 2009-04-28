@@ -378,8 +378,11 @@ function refresh_sidebar()
 		document.getElementById("rsslink").innerHTML = "<a href='"+osb_server_path+"getRSSfeed?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>RSS feed</a>";
 		document.getElementById("gpxlink").style.display = "list-item";
 		document.getElementById("gpxlink").innerHTML = "<a href='"+osb_server_path+"getGPX?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>GPX export</a>";
+		document.getElementById("gpxlink2").style.display = "list-item";
+		document.getElementById("gpxlink2").innerHTML = "<a href='"+osb_server_path+"getGPX?b="+b+"&t="+t+"&l="+l+"&r="+r+"&open=yes'>GPX export</a> (open bugs)";
 	} else {
 		document.getElementById("gpxlink").style.display = "none";
+		document.getElementById("gpxlink2").style.display = "none";
 		document.getElementById("rsslink").style.display = "none";
 	}
 	document.getElementById("permalink").innerHTML = "<a href='?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>Permalink</a>";
