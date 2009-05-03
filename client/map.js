@@ -32,6 +32,14 @@ function init_map(div_id, lon, lat, zoom)
 
 function init()
 {
-        var map = init_map('map', 16.3, 46.53, 4);
+	/* get URI param "z" and set zoomlevel */
+	var regex = new RegExp("[\\?&]z=([^&#]*)");
+	var result = regex.exec(window.location.href);
+	if(result == null)
+		zoomlevel = 4;
+	else
+		zoomlevel = result[1];
+
+        var map = init_map('map', 16.3, 46.53, zoomlevel);
         init_openstreetbugs(map, "/api/0.1/");
 }
