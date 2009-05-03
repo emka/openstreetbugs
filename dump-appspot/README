@@ -1,4 +1,1 @@
-osb-relocation is a collection of scripts for realizing a soft move away from openstreetbugs.appspot.com to "some better place" (TM).
-
-It is part of Openstreetbugs, see
-http://github.com/emka/osb/tree/master
+You need db_config.py in this folder as well.
