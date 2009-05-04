@@ -42,8 +42,10 @@ def main():
 	for row in cursor:
 		if row[4] == 1:
 			type = "closed bug"
-		else:
+		elif row[3].find("<hr />") != -1:
 			type = "new comment"
+		else:
+			type = "new bug"
 
 		pubDate = row[5].strftime("%a, %d %b %Y %H:%M:%S GMT")
 		desc = row[3].replace("<hr />"," | ")

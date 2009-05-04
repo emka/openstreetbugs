@@ -60,13 +60,15 @@ def main():
 	curs.execute("SELECT id, lon, lat, text, type, last_changed, nearby_place FROM bugs WHERE %(b)s <= lat and lat <= %(t)s and %(l)s <= lon and lon <= %(r)s ORDER BY last_changed DESC LIMIT 10", values)
 	for c in curs:
 		if c[4] == 1:
-			type = "closed"
+			type = "closed bug"
+		elif c[3].find("<hr />") != -1:
+                        type = "new comment"
 		else:
-			type = "open"
+			type = "new bug"
 
 		pubDate = c[5].strftime("%a, %d %b %Y %H:%M:%S GMT")
 		desc = c[3].replace("<hr />"," | ")
-		print "<item><title>%s bug near %s</title><description>%s</description><guid>%srssitem?id=%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, c[6], desc, api_uri, c[0], pubDate, c[2], c[1])
+		print "<item><title>%s (near %s)</title><description>%s</description><guid>%srssitem?id=%s</guid><pubDate>%s</pubDate><geo:lat>%s</geo:lat><geo:long>%s</geo:long></item>" % (type, c[6], desc, api_uri, c[0], pubDate, c[2], c[1])
 	print "</channel></rss>"
 
 main()
