@@ -49,6 +49,7 @@ def main():
 	for k, v in values.iteritems():
 		if not coord_exp.match(v):
 			print "<!-- invalid or missing %s -->" % k
+			print "</gpx>"
 			return
 		else:
 			values[k] = float(v)
@@ -59,9 +60,23 @@ def main():
 	else:
 		filter = ""
 	
+        limit = form.getfirst("limit" , "1000")
+        # check for valid format of optional parameter limit
+        limit_exp = re.compile(r"^-?\d+?$")
+        if not limit_exp.match(limit):
+                print "<!-- invalid limit -->"
+		print "</gpx>"
+                return
+#        else:
+#                print "<!-- limit: %s -->" %limit
+
+	if int(limit) > 100000: # maximum limit is 100000
+		limit = "100000"
+	
 	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	curs = conn.cursor()
-	querystr = "SELECT id, lon, lat, text FROM bugs WHERE %s%%(b)s <= lat and lat <= %%(t)s and %%(l)s <= lon and lon <= %%(r)s ORDER BY last_changed DESC LIMIT 1000" %filter
+	querystr = "SELECT id, lon, lat, text FROM bugs WHERE %s%%(b)s <= lat and lat <= %%(t)s and %%(l)s <= lon and lon <= %%(r)s ORDER BY last_changed DESC" % filter
+	querystr += " LIMIT %s" % limit
 	curs.execute(querystr, values)
 	for c in curs:
 		print "<wpt lon=\"%f\" lat=\"%f\"><desc>%s</desc></wpt>" % c[1:4]
