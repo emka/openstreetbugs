@@ -60,13 +60,13 @@ def main():
 	else:
 		filter = ""
 	
-        limit = form.getfirst("limit" , "1000")
-        # check for valid format of optional parameter limit
-        limit_exp = re.compile(r"^-?\d+?$")
-        if not limit_exp.match(limit):
-                print "<!-- invalid limit -->"
+	limit = form.getfirst("limit" , "1000")
+	# check for valid format of optional parameter limit
+	limit_exp = re.compile(r"^-?\d+?$")
+	if not limit_exp.match(limit):
+		print "<!-- invalid limit -->"
 		print "</gpx>"
-                return
+		return
 #        else:
 #                print "<!-- limit: %s -->" %limit
 
