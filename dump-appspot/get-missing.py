@@ -37,7 +37,6 @@ max_id = 150000 # this may change in future
 def main():
 	connection = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	cursor = connection.cursor()
-	# get ids of open bugs and bugs which were closed less than a week ago
 	cursor.execute("SELECT id FROM bugs WHERE id <= %d" % max_id)
 	result = cursor.fetchall()
 	for id in range(min_id,max_id+1):
