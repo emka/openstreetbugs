@@ -1,0 +1,82 @@
+* { margin: 0px; padding: 0px; }
+body {
+  font-family: sans-serif;
+  font-size: 62.5%;
+}
+
+h1 {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.3em;
+}
+hr {
+  color: #E0E0E0;
+  background-color: #E0E0E0;
+  height: 1px;
+  border: 0;
+}
+
+a:link, a:visited {
+  color: #5ca5ff;
+  font-weight: bold;
+  text-decoration: none;
+}
+a:hover {
+  color: #ffcc66;
+  text-decoration: none;
+}
+
+
+#left {
+  float: left;
+  width: 16em;
+  margin: 0.5em;
+}
+#map {
+  border: 1px solid #222;
+  position: absolute;
+  top: 0.5em;
+  bottom: 0.5em;
+  left: 18em;
+  right: 0.5em;
+}
+
+#linkbox {
+  margin: 0;
+  position: absolute;
+  bottom: 0.5em;
+  left: 2em;
+}
+
+.warn {
+  color: red;
+  font-weight: bold;
+}
+
+
+.olFramedCloudPopupContent {
+  padding: 10px;
+  overflow: auto;
+}
+.olControlPanel div {
+  margin-left: 60px;
+  margin-top: 10px;
+  width:  22px;
+  height: 22px;
+}
+.addMarkerBtn {
+  margin-left: 60px;
+  margin-top: 10px;
+  width:  22px;
+  height: 22px;
+  background-image: url("../icon_error_add.png");
+}
+
+.alert {
+  color: red;
+  font-weight: bold;
+}
