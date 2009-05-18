@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009 Xavier Le Bourdon, Christoph Böhme
+ * Copyright 2008, 2009 Xavier Le Bourdon, Christoph Böhme, Mitja Kleider
  *
  * This file is part of Openstreetbugs.
  *
@@ -109,6 +109,11 @@ function popup_open_bug(bug_or_id)
 	var description = '<h1>Unresolved Error</h1><p><b>Description:</b> '+fix_markup(bug.text)+'</p>';
 	var action_comment = '<ul><li><a href="#" onclick="add_comment('+bug.id+'); return false;">Add comment</a></li>';
 	var action_edit = '<li><a href="http://www.openstreetmap.org/edit?lat='+bug.lat+'&amp;lon='+bug.lon+'&amp;zoom=17" target="_blank">Edit in Potlatch</a></li>';
+	var top = parseFloat(bug.lat)+0.002;
+	var bottom = top - 0.004;
+	var left = parseFloat(bug.lon-0.003);
+	var right = left + 0.006;
+	action_edit += '<li><a href="http://localhost:8111/load_and_zoom?top='+top+'&amp;bottom='+bottom+'&amp;left='+left+'&amp;right='+right+'" target="_blank">JOSM</a></li>';
 	var action_close = '<li><a href="#" onclick="close_bug('+bug.id+'); return false;">Mark as Fixed</a></div></li></ul>';
 
 	return description+action_comment+action_edit+action_close;
