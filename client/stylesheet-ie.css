@@ -1,0 +1,14 @@
+#left {
+  width: 20%;
+}
+html, body {
+  height: 100%;
+}
+#map {
+  left: 23%;
+  width: 75%;
+  height: 90%;
+}
+hr {
+  width: 100px;
+}
