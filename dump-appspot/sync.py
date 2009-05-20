@@ -85,7 +85,7 @@ def main():
 				for key in update:
 					sqlstr += key + "=\"" + update[key] + "\","
 				sqlstr = sqlstr[:-1] # remove last comma
-				sqlstr += " WHERE id = %d;" %row["id"] # TODO add "\n" if you remove print
+				sqlstr += " WHERE id = %d;" %row["id"]
 				# apply query to database
 				cursor.execute(sqlstr)
 				connection.commit()
@@ -95,9 +95,9 @@ def main():
 	# and original bugs will never reach that value
 	cursor.execute("SELECT MAX(id) FROM bugs WHERE id<500000;")
 	result = cursor.fetchone()
-	if result["MAX(id)"] < 150000:
+	if result["MAX(id)"] < 155000:
 		# fetch new bugs
-		for i in range(result["MAX(id)"]+1,150000+1):
+		for i in range(result["MAX(id)"]+1,155000+1):
 			data = queryparseBug(i)
 			if len(data) is not 0:
 				# prepare MySQL query
