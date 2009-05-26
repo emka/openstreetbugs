@@ -30,7 +30,7 @@ CREATE TABLE `bugs` (
 	`id` bigint(20) unsigned NOT NULL auto_increment,
 	`lon` float default NULL,
 	`lat` float default NULL,
-	`text` text,
+	`text` mediumtext,
 	`type` int(11) default NULL,
 	`last_changed` datetime default NULL,
 	`date_created` datetime default NULL,
