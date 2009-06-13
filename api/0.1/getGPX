@@ -79,7 +79,7 @@ def main():
 	querystr += " LIMIT %s" % limit
 	curs.execute(querystr, values)
 	for c in curs:
-		print "<wpt lon=\"%f\" lat=\"%f\"><desc>%s</desc><extensions><closed>%s</closed><id>%s</id></extensions></wpt>" % c
+		print "<wpt lon=\"%f\" lat=\"%f\"><desc><![CDATA[%s]]></desc><extensions><closed>%s</closed><id>%s</id></extensions></wpt>" % c
 	
 	print "</gpx>"
 
