@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright 2009 Christoph Böhme
+# Copyright 2009 Christoph Böhme, Mitja Kleider
 #
 # This file is part of Openstreetbugs.
 #
@@ -27,7 +27,7 @@ import re
 import db_config # DATABASE CONFIGURATION
 
 def main():
-	print "Content-type: text/javascript\n"
+	print "Content-type: text/javascript; Charset=UTF-8\n"
 	form = cgi.FieldStorage()
 
 	values = {}
