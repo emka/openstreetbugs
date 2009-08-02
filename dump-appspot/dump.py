@@ -47,6 +47,9 @@ def writeBugs(filename):
 
 
 def queryparseBug(id):
+	try: query_iteration # check if query_iteration is defined
+	except NameError: query_iteration = 0
+	query_iteration = query_iteration+1 # count number of iterations
 	url = "http://openstreetbugs.appspot.com/getGPXitem?id=%d" % (id)
 	try:
 		f = urllib.urlopen(url)
@@ -69,8 +72,11 @@ def queryparseBug(id):
 				data["nearbyplacename"] = "Unknown"
 		return data
 	except:
-		print "error at %d" % id
-		return queryparseBug(id)  # try again
+		#print "error at %d" % id
+		if query_iteration < 100:
+			return queryparseBug(id)  # try again
+		else:
+			return
 
 
 def main():
