@@ -576,6 +576,8 @@ function add_bug_completed()
 {
 	document.getElementById("map_OpenLayers_Container").style.cursor = "crosshair";
 
+	osb_layer.removeMarker(osb_current_feature.marker);
+	osb_map.removePopup(osb_current_feature.popup);
 	osb_current_feature.destroy();
 	osb_current_feature = null;
 	osb_state = 0;
@@ -586,6 +588,8 @@ function add_bug_cancel()
 {
 	document.getElementById("map_OpenLayers_Container").style.cursor = "crosshair";
 
+	osb_layer.removeMarker(osb_current_feature.marker);
+	osb_map.removePopup(osb_current_feature.popup);
 	osb_current_feature.destroy();
 	osb_state = 0;
 	osb_current_feature = null;
@@ -637,6 +641,8 @@ function close_bug_submit(id, form)
 		{
 			// Change bug status to closed:
 			osb_bugs[i].type = 1;
+			osb_layer.removeMarker(osb_bugs[i].feature.marker);
+			osb_map.removePopup(osb_bugs[i].feature.popup);
 			osb_bugs[i].feature.data.icon = create_feature.closed_bug_icon.clone();
 			osb_bugs[i].feature.destroyMarker();
 
