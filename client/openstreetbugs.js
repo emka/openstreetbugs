@@ -435,6 +435,8 @@ function create_feature(x, y, popup_content, type)
 
 	var icon = !type ? create_feature.open_bug_icon.clone() : create_feature.closed_bug_icon.clone();
 	var feature = new OpenLayers.Feature(osb_layer, new OpenLayers.LonLat(x, y), {icon: icon});
+	// TODO closeBox should be true, but not closing bugs by clicking the marker leads to buggy behaviour
+	feature.closeBox = false;
 	feature.popupClass = OpenLayers.Class(OpenLayers.Popup.FramedCloud);
 	feature.data.popupContentHTML = popup_content;
 
@@ -450,7 +452,7 @@ function create_marker(feature)
 	{
 		if (osb_state == 0)
 		{
-			this.createPopup();
+			this.createPopup(this.closeBox);
 			osb_map.addPopup(this.popup);
 			osb_state = 1;
 			osb_current_feature = this;
@@ -468,7 +470,7 @@ function create_marker(feature)
 		if (osb_state == 0)
 		{
 			document.getElementById("map_OpenLayers_Container").style.cursor = "pointer";
-			this.createPopup();
+			this.createPopup(this.closeBox);
 			osb_map.addPopup(this.popup)
 		}
 		else if (osb_state != 2 && this == osb_current_feature) /* If not adding a new bug show pointer over current feature */
@@ -551,7 +553,7 @@ function add_bug(x, y)
 		osb_state = 2;
 		osb_current_feature = create_feature(x, y, popup_add_bug(x, y, get_cookie("osb_nickname")), 0);
 
-		osb_current_feature.createPopup();
+		osb_current_feature.createPopup(osb_current_feature.closeBox);
 		osb_map.addPopup(osb_current_feature.popup);
 
 		document.getElementById('description').focus();
@@ -641,8 +643,6 @@ function close_bug_submit(id, form)
 		{
 			// Change bug status to closed:
 			osb_bugs[i].type = 1;
-			osb_layer.removeMarker(osb_bugs[i].feature.marker);
-			osb_map.removePopup(osb_bugs[i].feature.popup);
 			osb_bugs[i].feature.data.icon = create_feature.closed_bug_icon.clone();
 			osb_bugs[i].feature.destroyMarker();
 
