@@ -644,6 +644,7 @@ function close_bug_submit(id, form)
 			// Change bug status to closed:
 			osb_bugs[i].type = 1;
 			osb_bugs[i].feature.data.icon = create_feature.closed_bug_icon.clone();
+			osb_layer.removeMarker(osb_bugs[i].feature.marker);
 			osb_bugs[i].feature.destroyMarker();
 
 			create_marker(osb_bugs[i].feature);
