@@ -95,9 +95,9 @@ def main():
 	# and original bugs will never reach that value
 	cursor.execute("SELECT MAX(id) FROM bugs WHERE id<500000;")
 	result = cursor.fetchone()
-	if result["MAX(id)"] < 263000:
+	if result["MAX(id)"] < 286000:
 		# fetch new bugs
-		for i in range(result["MAX(id)"]+1,263000+1):
+		for i in range(result["MAX(id)"]+1,286000+1):
 			data = queryparseBug(i)
 			if len(data) is not 0:
 				# prepare MySQL query
@@ -108,6 +108,7 @@ def main():
 	else:
 		# need to change range
 		sys.stderr.write("OSB synchronization error: bugcount in database is out of range.\nPlease update your script!\n")
+		# problem here: if hard-coded maximum id is skipped in the Appspot database, this script will never complain
 	
 
 main()
