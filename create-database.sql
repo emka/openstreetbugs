@@ -28,8 +28,8 @@ CREATE DATABASE `osb`;
 
 CREATE TABLE `bugs` (
 	`id` bigint(20) unsigned NOT NULL auto_increment,
-	`lon` float default NULL,
-	`lat` float default NULL,
+	`lon` double default NULL,
+	`lat` double default NULL,
 	`text` mediumtext,
 	`type` int(11) default NULL,
 	`last_changed` datetime default NULL,
