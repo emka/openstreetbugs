@@ -24,7 +24,7 @@ import MySQLdb
 import db_config # DATABASE CONFIGURATION
 
 def main():
-	server_uri = "http://openstreetbugs.arrangedchaos.net/"
+	server_uri = "http://openstreetbugs.schokokeks.org/"
 	api_uri = server_uri+"api/0.1/"
 
 	print "Content-type: application/rss+xml\n"
