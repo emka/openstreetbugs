@@ -30,6 +30,8 @@ import sys # for sys.stderr.write
 from dump import parseBoolString, queryparseBug 
 import db_config # DATABASE CONFIGURATION
 
+MAX_ID = 300000
+
 
 def str2datetime(str):
 	if str.find(".") != -1:
@@ -95,9 +97,9 @@ def main():
 	# and original bugs will never reach that value
 	cursor.execute("SELECT MAX(id) FROM bugs WHERE id<500000;")
 	result = cursor.fetchone()
-	if result["MAX(id)"] < 286000:
+	if result["MAX(id)"] < MAX_ID:
 		# fetch new bugs
-		for i in range(result["MAX(id)"]+1,286000+1):
+		for i in range(result["MAX(id)"]+1,MAX_ID+1):
 			data = queryparseBug(i)
 			if len(data) is not 0:
 				# prepare MySQL query
