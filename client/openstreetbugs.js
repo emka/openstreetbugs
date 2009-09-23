@@ -376,10 +376,12 @@ function shorter_coord(coord)
 
 function refresh_sidebar()
 {
-	var zoom = map.getZoom();
-	coords = map.getCenter();
-	var lon = shorter_coord(x2lon(coords.lon));
-	var lat = shorter_coord(y2lat(coords.lat));
+	var params = permalink.createParams();
+	var zoom = params.zoom;
+	var lon = params.lon;
+	var lat = params.lat;
+	var layers = params.layers;
+
 	if (zoom > 10) {
 		document.getElementById("rsslink").style.display = "list-item";
 		document.getElementById("rsslink").innerHTML = "<a href='"+osb_server_path+"getRSSfeed?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>RSS feed</a>";
@@ -392,7 +394,7 @@ function refresh_sidebar()
 		document.getElementById("gpxlink2").style.display = "none";
 		document.getElementById("rsslink").style.display = "none";
 	}
-	document.getElementById("permalink").innerHTML = "<a href='?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>Permalink</a>";
+	document.getElementById("permalink").innerHTML = "<a href='?lon="+lon+"&lat="+lat+"&zoom="+zoom+"&layers="+layers+"'>Permalink</a>";
 	document.getElementById("geofabrik").innerHTML = "<a href='http://tools.geofabrik.de/map/?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>Geofabrik Map</a>";
 }
 
