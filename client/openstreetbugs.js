@@ -97,7 +97,7 @@ function lonLatToMercator(ll) { return new OpenLayers.LonLat(lon2x(ll.lon), lat2
  */
 function fix_markup(str)
 {
-	return str.replace(/<hr \/>/g, '</p><p class="Comment"><b>Comment:</b> ');
+	return str.replace(/<hr \/>/g, '</p><p class="Comment"><b>'+_('Comment:')+'</b> ');
 }
 
 /* Html markup for popups showing unresolved bugs.
@@ -106,15 +106,15 @@ function popup_open_bug(bug_or_id)
 {
 	bug = bug_or_id instanceof Object ? bug_or_id : get_bug(bug_or_id);
 	
-	var description = '<h1>Unresolved Error</h1><p><b>Description:</b> '+fix_markup(bug.text)+'</p>';
+	var description = '<h1>'+_('Unresolved Error')+'</h1><p><b>'+_('Description:')+'</b> '+fix_markup(bug.text)+'</p>';
 	var action_comment = '<ul><li><a href="#" onclick="add_comment('+bug.id+'); return false;">Add comment</a></li>';
-	var action_edit = '<li><a href="http://www.openstreetmap.org/edit?lat='+bug.lat+'&amp;lon='+bug.lon+'&amp;zoom=17" target="_blank">Edit in Potlatch</a></li>';
+	var action_edit = '<li><a href="http://www.openstreetmap.org/edit?lat='+bug.lat+'&amp;lon='+bug.lon+'&amp;zoom=17" target="_blank">'+_('Edit in Potlatch')+'</a></li>';
 	var top = parseFloat(bug.lat)+0.002;
 	var bottom = top - 0.004;
 	var left = parseFloat(bug.lon-0.003);
 	var right = left + 0.006;
-	action_edit += '<li><a href="http://localhost:8111/load_and_zoom?top='+top+'&amp;bottom='+bottom+'&amp;left='+left+'&amp;right='+right+'" target="_blank">JOSM</a></li>';
-	var action_close = '<li><a href="#" onclick="close_bug('+bug.id+'); return false;">Mark as Fixed</a></div></li></ul>';
+	action_edit += '<li><a href="http://localhost:8111/load_and_zoom?top='+top+'&amp;bottom='+bottom+'&amp;left='+left+'&amp;right='+right+'" target="_blank">'+_('JOSM')+'</a></li>';
+	var action_close = '<li><a href="#" onclick="close_bug('+bug.id+'); return false;">'+_('Mark as Fixed')+'</a></div></li></ul>';
 
 	return description+action_comment+action_edit+action_close;
 }
@@ -125,8 +125,8 @@ function popup_closed_bug(bug_or_id)
 {
 	bug = bug_or_id instanceof Object ? bug_or_id : get_bug(bug_or_id);
 
-	var description = '<h1>Fixed Error</h1><p><b>Description:</b> '+fix_markup(bug.text)+'</p>';
-	var note = '<p class="Note">This error has been fixed already. However, it might take a couple of days before the map image is updated.</p>';
+	var description = '<h1>'+_('Fixed Error')+'</h1><p><b>'+_('Description:')+'</b> '+fix_markup(bug.text)+'</p>';
+	var note = '<p class="Note">'+_('This error has been fixed already. However, it might take a couple of days before the map image is updated.')+'</p>';
 
 	return description+note;
 }
@@ -135,11 +135,11 @@ function popup_closed_bug(bug_or_id)
  */
 function popup_add_bug(x, y, nickname)
 {
-	var intro_text = '<h1>Create an Error Report</h1><p>Please provide a short description of what\'s wrong here. You can also enter your nickname to show that you found the error.</p>';
+	var intro_text = '<h1>'+_('Create an Error Report')+'</h1><p>'+_('Please provide a short description of what\'s wrong here. You can also enter your nickname to show that you found the error.')+'</p>';
 	var form_header = '<form><div><input type="hidden" name="lon" value="'+x2lon(x)+'"><input type="hidden" name="lat" value="'+y2lat(y)+'"></div>';
-	var description = '<div><span class="InputLabel">Description:</span><input type="text" id="description" name="text"></div>';
-	var nickname = '<div><span class="InputLabel">Your Nickname:</span><input type="text" id="nickname" value="'+(nickname ? nickname : 'NoName')+'"></div>';
-	var form_footer = '<div class="FormFooter"><input type="button" value="OK" onclick="add_bug_submit(this.form);"><input type="button" value="Cancel" onclick="add_bug_cancel();"></div></form>';
+	var description = '<div><span class="InputLabel">'+_('Description:')+'</span><input type="text" id="description" name="text"></div>';
+	var nickname = '<div><span class="InputLabel">'+_('Your Nickname:')+'</span><input type="text" id="nickname" value="'+(nickname ? nickname : 'NoName')+'"></div>';
+	var form_footer = '<div class="FormFooter"><input type="button" value="'+_('OK')+'" onclick="add_bug_submit(this.form);"><input type="button" value="'+_('Cancel')+'" onclick="add_bug_cancel();"></div></form>';
 
 	return intro_text+form_header+description+nickname+form_footer;
 }
@@ -148,7 +148,7 @@ function popup_add_bug(x, y, nickname)
  */
 function popup_add_bug_wait()
 {
-	return '<h1>Create an Error Report</h1><p>Please wait while your error is submitted ...</p>';
+	return '<h1>'+_('Create an Error Report')+'</h1><p>'+_('Please wait while your error is submitted ...')+'</p>';
 }
 
 /* Html markup for popups with an add comment form.
@@ -157,11 +157,11 @@ function popup_add_comment(bug_or_id, nickname)
 {
 	bug = bug_or_id instanceof Object ? bug_or_id : get_bug(bug_or_id);
 
-	var description = '<h1>Add a Comment</h1><p><b>Description:</b> '+fix_markup(bug.text)+'</p>';
+	var description = '<h1>'+_('Add a Comment')+'</h1><p><b>'+_('Description:')+'</b> '+fix_markup(bug.text)+'</p>';
 	var form_header = '<form class="NewComment"><div><input type="hidden" name="id" value="'+bug.id+'"></div>';
-	var comment = '<div><span class="InputLabel">Your Comment:</span><input type="text" id="comment" name="text"></div>';
-	var nickname = '<div><span class="InputLabel">Your Nickname:</span><input type="text" id="nickname" value="'+(nickname ? nickname : 'NoName')+'"></div>';
-	var form_footer = '<div class="FormFooter"><input type="button" value="OK" onclick="add_comment_submit('+bug.id+', this.form);"><input type="button" value="Cancel" onclick="reset_popup('+bug.id+');"></div></form>';
+	var comment = '<div><span class="InputLabel">'+_('Your Comment:')+'</span><input type="text" id="comment" name="text"></div>';
+	var nickname = '<div><span class="InputLabel">'+_('Your Nickname:')+'</span><input type="text" id="nickname" value="'+(nickname ? nickname : 'NoName')+'"></div>';
+	var form_footer = '<div class="FormFooter"><input type="button" value="'+_('OK')+'" onclick="add_comment_submit('+bug.id+', this.form);"><input type="button" value="'+_('Cancel')+'" onclick="reset_popup('+bug.id+');"></div></form>';
 	
 	return description+form_header+comment+nickname+form_footer;
 }
@@ -172,12 +172,12 @@ function popup_close_bug(bug_or_id, nickname)
 {
 	bug = bug_or_id instanceof Object ? bug_or_id : get_bug(bug_or_id);
 
-	var warning = '<h1>Mark Error as Fixed</h1><p>Do you really want to mark this error as fixed? The error will be deleted after a week.</p>';
+	var warning = '<h1>'+_('Mark Error as Fixed')+'</h1><p>'+_('Do you really want to mark this error as fixed? The error will be deleted after a week.')+'</p>';
 	var form_header = '<form><div><input type="hidden" name="id" value="'+bug.id+'"></div>';
-	var comment = '<div><span class="InputLabel">Your Comment:</span><input type="text" id="comment" name="text"></div>';
-	var nickname = '<div><span class="InputLabel">Your Nickname:</span><input type="text" id="nickname" value="'+(nickname ? nickname : 'NoName')+'"></div>';
-	var form_footer = '<div class="FormFooter"><input type="button" value="Yes" onclick="close_bug_submit('+bug.id+', this.form);"><input type="button" value="No" onclick="reset_popup('+bug.id+');"></div></form>';
-	var description = '<p><b>Description:</b> '+fix_markup(bug.text)+'</p>';
+	var comment = '<div><span class="InputLabel">'+_('Your Comment:')+'</span><input type="text" id="comment" name="text"></div>';
+	var nickname = '<div><span class="InputLabel">'+_('Your Nickname:')+'</span><input type="text" id="nickname" value="'+(nickname ? nickname : 'NoName')+'"></div>';
+	var form_footer = '<div class="FormFooter"><input type="button" value="'+_('Yes')+'" onclick="close_bug_submit('+bug.id+', this.form);"><input type="button" value="'+_('No')+'" onclick="reset_popup('+bug.id+');"></div></form>';
+	var description = '<p><b>'+_('Description:')+'</b> '+fix_markup(bug.text)+'</p>';
 
 	return warning+form_header+comment+nickname+form_footer+description;
 }
@@ -384,18 +384,18 @@ function refresh_sidebar()
 
 	if (zoom > 10) {
 		document.getElementById("rsslink").style.display = "list-item";
-		document.getElementById("rsslink").innerHTML = "<a href='"+osb_server_path+"getRSSfeed?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>RSS feed</a>";
+		document.getElementById("rsslink").innerHTML = "<a href='"+osb_server_path+"getRSSfeed?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>"+_("RSS feed")+"</a>";
 		document.getElementById("gpxlink").style.display = "list-item";
-		document.getElementById("gpxlink").innerHTML = "<a href='"+osb_server_path+"getGPX?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>GPX export</a>";
+		document.getElementById("gpxlink").innerHTML = "<a href='"+osb_server_path+"getGPX?b="+b+"&t="+t+"&l="+l+"&r="+r+"'>"+_("GPX export")+"</a>";
 		document.getElementById("gpxlink2").style.display = "list-item";
-		document.getElementById("gpxlink2").innerHTML = "<a href='"+osb_server_path+"getGPX?b="+b+"&t="+t+"&l="+l+"&r="+r+"&open=yes'>GPX export</a> (open bugs)";
+		document.getElementById("gpxlink2").innerHTML = "<a href='"+osb_server_path+"getGPX?b="+b+"&t="+t+"&l="+l+"&r="+r+"&open=yes'>"+_("GPX export")+"</a>"+_(" (open bugs)");
 	} else {
 		document.getElementById("gpxlink").style.display = "none";
 		document.getElementById("gpxlink2").style.display = "none";
 		document.getElementById("rsslink").style.display = "none";
 	}
-	document.getElementById("permalink").innerHTML = "<a href='?lon="+lon+"&lat="+lat+"&zoom="+zoom+"&layers="+layers+"'>Permalink</a>";
-	document.getElementById("geofabrik").innerHTML = "<a href='http://tools.geofabrik.de/map/?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>Geofabrik Map</a>";
+	document.getElementById("permalink").innerHTML = "<a href='?lon="+lon+"&lat="+lat+"&zoom="+zoom+"&layers="+layers+"'>"+_("Permalink")+"</a>";
+	document.getElementById("geofabrik").innerHTML = "<a href='http://tools.geofabrik.de/map/?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>"+_("Geofabrik Map")+"</a>";
 }
 
 /* Check if a bug has been downloaded already.
@@ -668,4 +668,26 @@ function reset_popup(id)
 		bug.feature.popup.setContentHTML(popup_closed_bug(id));
 	
 	osb_state = 1;
+}
+
+function clear_overlays()
+{
+	/* remove and destroy all markers */
+	var marker;
+	while( osb_layer.markers.length ) {
+		marker = osb_layer.markers[0];
+		osb_layer.removeMarker(osb_layer.markers[0]);
+		marker.destroy();
+		/*marker = null;*/
+	}
+	osb_bugs = []; /* markers not present anymore */
+
+	/* remove and destroy all popups */
+	var popup;
+	while( osb_map.popups.length ) {
+		popup = osb_map.popups[0];
+		osb_map.removePopup(osb_map.popups[0]);
+		popup.destroy();
+		/*popup = null;*/
+	}
 }
