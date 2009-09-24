@@ -12,10 +12,10 @@ translation = {
 'According to the OpenStreetMap license, the data that you add on the map will be licensed ' : '',
 'Do NOT use licensed data' : '',
 ' like paper maps, Google Maps, etc. Use only your knowledge of the reality or public domain data.' : '',
-'current view' : '',
 'Create an Error Report' : '',
 'Please provide a short description of what\'s wrong here. You can also enter your nickname to show that you found the error.' : '',
 'Add a Comment' : '',
+'Add comment' : '',
 'Your Comment:' : '',
 'Mark as Fixed' : '',
 'Mark Error as Fixed' : '',
@@ -33,5 +33,11 @@ translation = {
 'OK' : '',
 'Cancel' : '',
 'Please wait while your error is submitted ...' : '',
+'current view' : '',
+'RSS feed' : '',
+'Permalink' : '',
+'Geofabrik Map' : '',
+'GPX export' : '',
+' (open bugs)' : '',
 // Do not delete the following line:
 }

@@ -107,7 +107,7 @@ function popup_open_bug(bug_or_id)
 	bug = bug_or_id instanceof Object ? bug_or_id : get_bug(bug_or_id);
 	
 	var description = '<h1>'+_('Unresolved Error')+'</h1><p><b>'+_('Description:')+'</b> '+fix_markup(bug.text)+'</p>';
-	var action_comment = '<ul><li><a href="#" onclick="add_comment('+bug.id+'); return false;">Add comment</a></li>';
+	var action_comment = '<ul><li><a href="#" onclick="add_comment('+bug.id+'); return false;">'+_('Add comment')+'</a></li>';
 	var action_edit = '<li><a href="http://www.openstreetmap.org/edit?lat='+bug.lat+'&amp;lon='+bug.lon+'&amp;zoom=17" target="_blank">'+_('Edit in Potlatch')+'</a></li>';
 	var top = parseFloat(bug.lat)+0.002;
 	var bottom = top - 0.004;
@@ -239,7 +239,8 @@ function init_openstreetbugs(map, server_path)
 	osb_map.addControl(click);
 	click.activate();
 
-	refresh_osb();
+	/*refresh_osb();*/
+	set_language(userLang);
 }
 
 
