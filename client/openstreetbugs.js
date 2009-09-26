@@ -239,7 +239,7 @@ function init_openstreetbugs(map, server_path)
 	osb_map.addControl(click);
 	click.activate();
 
-	/*refresh_osb();*/
+	refresh_osb();
 	set_language(userLang);
 }
 
