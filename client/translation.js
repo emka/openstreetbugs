@@ -11,6 +11,7 @@ function set_language (lang) {
     var script = document.createElement('script');
     script.src = 'locale/'+lang+'.js';
     script.type = 'text/javascript';
+    script.charset = 'UTF-8';
     script.onload = function() {
         translate_sidebar();
         clear_overlays();
