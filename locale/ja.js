@@ -1,6 +1,6 @@
 translation = {
-'Feel free to put the modifications you would like to see on ' : '地図上の変更してもらいたい場所に自由にバグマーカを置いてください。',
-' on the map.' : '地図上の',
+'Feel free to put the modifications you would like to see on ' : '',
+' on the map.' : '地図上の変更してもらいたい場所に自由にバグマーカを置いてください。',
 'Read and get ' : 'もっと詳細は',
 'more' : 'こちらへ',
 'To add a bug, click at the desired spot in the map.' : 'バグを加えるには、地図上の望みの場所をクリックしてください。',
