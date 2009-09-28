@@ -34,5 +34,4 @@ translation = {
 'Geofabrik Map' : 'Geofabrik 地図',
 'GPX export' : 'GPX エクスポート',
 ' (open bugs)' : null,
-// Do not delete the following line この行と前行のコンマを消さないで:
 }

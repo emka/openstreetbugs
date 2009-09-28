@@ -31,6 +31,7 @@ function init_map(div_id, lon, lat, zoom)
 	return map;
 }
 
+window.onload = init;
 function init()
 {
 	/* get URI param "z" and set zoomlevel */

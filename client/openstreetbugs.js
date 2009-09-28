@@ -240,7 +240,7 @@ function init_openstreetbugs(map, server_path)
 	click.activate();
 
 	refresh_osb();
-	set_language(userLang);
+	translate_sidebar();
 }
 
 

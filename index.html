@@ -1,37 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<title>OpenStreetBugs - Help us to improve OpenStreetMap</title>
 	<link rel="icon" type="image/png" href="client/open_bug_marker.png">
 	<link rel="stylesheet" href="client/map.css" type="text/css">
-	<link rel="stylesheet" href="client/openstreetbugs.css" type="text/css">
 	<!--[if IE]><link rel="StyleSheet" type="text/css" href="client/stylesheet-ie.css" media="screen" /><![endif]-->
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
 	<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js" type="text/javascript"></script>
 	<script src="client/map.js" type="text/javascript"></script>
 	<script src="client/translation.js" type="text/javascript"></script>
+	<script src="locale/osb.json" type="text/javascript"></script>
 	<script src="client/openstreetbugs.js" type="text/javascript"></script>
 </head>
-<body onload="init()">
-<!--[if lte IE 6]>
-<style type="text/css">
-#left, #map{display:none;}
-</style>
-<div id="ie6msg">
-<h4>Did you know that your browser is out of date?</h4>
-<p>To get the best possible experience using our website we recommend that you upgrade your browser to a newer version. The current version is <a class="getie8" href="http://upgradeie.s3.amazonaws.com/eng/index.html">Internet Explorer 8</a>. The upgrade is free. If you're using a PC at work you should contact your IT administrator.</p>
-<p>If you want to you may also try some other popular Internet browsers like <a class="ie6expl" href="http://getfirefox.com">Firefox</a>, <a class="ie6expl" href="http://www.opera.com">Opera</a>, or <a class="ie6expl" href="http://www.apple.com/safari/download/">Safari</a></p>
-</div>
-<![endif]-->
+<body>
 <div id="left">
-	<h1><a href="/"><img src="logo.png" alt="OpenStreetBugs" style="border:none"></a></h1>
-	<div id="introduction" style="font-size: small;">
-	<p>Feel free to put the modifications you would like to see on <a href="http://www.openstreetmap.org">OpenStreetMap</a> on the map.</p>
+	<h1><a href="/"><img src="logo.png" alt="OpenStreetBugs" /></a></h1>
+	<div id="introduction">
+	<p>Feel free to put the modifications you would like to see on <a href="http://www.openstreetmap.org/">OpenStreetMap</a> on the map.</p>
 	<p><span class="warn">Do NOT use licensed data</span> like paper maps, Google Maps, etc. Use only your knowledge of the reality or public domain data.</p>
 	<p>According to the OpenStreetMap license, the data that you add on the map will be licensed <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>.</p>
 	<p>To add a bug, click at the desired spot in the map.</p>
-	<p>Read and get <a href="more.html">more</a>.</p>
+	<p><a href="more.html">More information</a></p>
 	</div><p>
 	<h3 id="linkbox-header">current view</h3>
 	<ul id="linkbox">
@@ -45,9 +35,7 @@
 <div id="map">
 	<noscript>
 			<h2>Javascript not found</h2>
-			<p>I am sorry but the map requires Javascript.<br>
-			Your browser does not support Javascript or you have disabled it.<br>
-			Please enable it to view the map.</p>
+			<p>This application requires Javascript. Please enable it to view the map.</p>
 	</noscript>
 </div>
 </body>
