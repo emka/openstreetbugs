@@ -1,8 +1,6 @@
 translation = {
-'Feel free to put the modifications you would like to see on ' : '',
-' on the map.' : '地図上の変更してもらいたい場所に自由にバグマーカを置いてください。',
-'Read and get ' : 'もっと詳細は',
-'more' : 'こちらへ',
+'Feel free to put the modifications you would like to see on {{OpenStreetMap}} on the map.' : '地図上の変更してもらいたい場所に自由にバグマーカを置いてください。 {{OpenStreetMap}}.',
+'More information' : 'もっと詳細は こちらへ',
 'To add a bug, click at the desired spot in the map.' : 'バグを加えるには、地図上の望みの場所をクリックしてください。',
 'According to the OpenStreetMap license, the data that you add on the map will be licensed ' : 'OpenStreetMap ライセンスによると、あなたがこの地図に加えたデータは、次のライセンスで使用許可されます: ',
 'Do NOT use licensed data' : '著作権があるデータを置かないでください。',
