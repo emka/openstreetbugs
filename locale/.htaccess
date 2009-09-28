@@ -1,1 +1,3 @@
-Options +MultiViews
+LanguagePriority en de
+ForceLanguagePriority Fallback
+Options MultiViews
