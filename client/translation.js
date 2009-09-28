@@ -9,7 +9,7 @@ var userLang = (navigator.language) ? navigator.language : navigator.userLanguag
 
 function set_language (lang) {
     var script = document.createElement('script');
-    script.src = 'locale/osb.json.'+lang;
+    script.src = 'locale/osb.'+lang+'.json';
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.onload = function() {
