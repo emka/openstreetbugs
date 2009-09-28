@@ -1,0 +1,14 @@
+URI: osb.json
+
+URI: osb.en.json
+Content-type: application/json
+Content-language: en
+
+URI: osb.de.json
+Content-type: application/json
+Content-language: de
+
+URI: osb.ja.json
+Content-type: application/json
+Content-language: ja
+
