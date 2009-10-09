@@ -30,7 +30,7 @@ import sys # for sys.stderr.write
 from dump import parseBoolString, queryparseBug 
 import db_config # DATABASE CONFIGURATION
 
-MAX_ID = 300000
+MAX_ID = 360000
 
 
 def str2datetime(str):

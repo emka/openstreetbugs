@@ -29,8 +29,8 @@ import MySQLdb
 from dump import parseBoolString, queryparseBug 
 import db_config # DATABASE CONFIGURATION
 
-min_id = 200000
-max_id = 263000 # this may change in future
+min_id = 100000
+max_id = 360000
 
 
 # some bugs are still missing in the dump, dump again and get those missing
