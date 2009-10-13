@@ -16,3 +16,11 @@ URI: osb.fr.json
 Content-type: application/json; charset=utf-8
 Content-language: fr
 
+URI: osb.pt_BR.json
+Content-type: application/json; charset=utf-8
+Content-language: pt_BR
+
+URI: osb.pt_BR.json
+Content-type: application/json; charset=utf-8
+Content-language: pt
+
