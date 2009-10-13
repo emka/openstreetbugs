@@ -12,3 +12,7 @@ URI: osb.ja.json
 Content-type: application/json
 Content-language: ja
 
+URI: osb.fr.json
+Content-type: application/json; charset=utf-8
+Content-language: fr
+
