@@ -29,22 +29,35 @@ import db_config # DATABASE CONFIGURATION
 
 
 def main():
-	print "Content-type: text/html\n"
 	form = cgi.FieldStorage()
 
 	values = {}
 	values["id"] = form.getfirst("id", "")
 
+	output_format = form.getfirst("format", "")
+	output_format_js = re.match("js", output_format)
+
+	if output_format_js:
+		print "Content-type: text/javascript; charset=UTF-8\n"
+	else:
+		print "Content-type: text/html\n"
+
 	# Check that parameters have a valid format:
 	if not re.match(r"^\d+$", values["id"]):
-		print "invalid or missing id"
+		if output_format_js:
+			print "osbResponse(\"invalid or missing id\");"
+		else:
+			print "invalid or missing id"
 		return
-	
+
 	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	curs = conn.cursor()
 	curs.execute("UPDATE bugs SET type = 1, last_changed = NOW() WHERE id = %(id)s and type = 0", values)
 	conn.commit()
 
-	print "ok"
+	if output_format_js:
+		print "osbResponse();"
+	else:
+		print "ok"
 
 main()

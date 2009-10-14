@@ -31,19 +31,32 @@ import db_config # DATABASE CONFIGURATION
 
 
 def main():
-	print "Content-type: text/html\n"
 	form = cgi.FieldStorage()
 
 	values = {}
 	values["id"] = form.getfirst("id", "")
 	values["text"] = form.getfirst("text", "")
 
+	output_format = form.getfirst("format", "")
+	output_format_js = re.match("js", output_format)
+
+	if output_format_js:
+		print "Content-type: text/javascript; charset=UTF-8\n"
+	else:
+		print "Content-type: text/html\n"
+
 	# Check that parameters have a valid format:
 	if not re.match(r"^\d+$", values["id"]):
-		print "invalid or missing id"
+		if output_format_js:
+			print "osbResponse(\"invalid or missing id\");"
+		else:
+			print "invalid or missing id"
 		return
 	if values["text"].strip() == "" or not re.match(r"^[^\x00-\x1f]*$", values["text"]):
-		print "invalid or missing text"
+		if output_format_js:
+			print "osbResponse(\"invalid or missing text\");"
+		else:
+			print "invalid or missing text"
 		return
 
 	values["text"] = cgi.escape(values["text"], True)
@@ -58,6 +71,9 @@ def main():
 	curs.execute("UPDATE bugs SET text = CONCAT(text, '<hr />', %(text)s), last_changed = NOW() WHERE id = %(id)s", values)
 	conn.commit()
 
-	print "comment added"
+	if output_format_js:
+		print "osbResponse();"
+	else:
+		print "comment added"
 
 main()

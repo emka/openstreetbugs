@@ -33,7 +33,6 @@ import db_config # DATABASE CONFIGURATION
 
 
 def main():
-	print "Content-type: text/html\n"
 	form = cgi.FieldStorage()
 
 	values = {}
@@ -41,16 +40,33 @@ def main():
 	values["lon"] = form.getfirst("lon", "")
 	values["text"] = form.getfirst("text", "")
 
+	output_format = form.getfirst("format", "")
+	output_format_js = re.match("js", output_format)
+
+	if output_format_js:
+		print "Content-type: text/javascript; charset=UTF-8\n"
+	else:
+		print "Content-type: text/html\n"
+
 	# Check that parameters have a valid format:
 	coord_exp = re.compile(r"^-?\d{1,3}(\.\d+)?$")
 	if not coord_exp.match(values["lat"]) or not (-180 <= float(values["lat"]) and float(values["lat"]) <= 180):
-		print "invalid or missing lat"
+		if output_format_js:
+			print "osbResponse(\"invalid or missing lat\");"
+		else:
+			print "invalid or missing lat"
 		return
 	if not coord_exp.match(values["lon"]) or not (-180 <= float(values["lon"]) and float(values["lon"]) <= 180):
-		print "invalid or missing lon"
+		if output_format_js:
+			print "osbResponse(\"invalid or missing lon\");"
+		else:
+			print "invalid or missing lon"
 		return
 	if values["text"].strip() == "" or not re.match(r"^[^\x00-\x1f]*$", values["text"]):
-		print "invalid or missing text"
+		if output_format_js:
+			print "osbResponse(\"invalid or missing text\");"
+		else:
+			print "invalid or missing text"
 		return
 
 	values["text"] = cgi.escape(values["text"], True)
@@ -78,6 +94,9 @@ def main():
 	cursor.execute("INSERT INTO bugs SET lon = %(lon)s, lat = %(lat)s, text = %(text)s, type = 0, last_changed = NOW(), date_created = NOW(), nearby_place = %(nearbyplace)s", values)
 	conn.commit()
 
-	print "ok\n%d" %int(cursor.lastrowid)
+	if output_format_js:
+		print "osbResponse();"
+	else:
+		print "ok\n%d" %int(cursor.lastrowid)
 
 main()
