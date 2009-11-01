@@ -1,0 +1,21 @@
+<?php
+
+require("config.php");
+
+$request =  $_SERVER["QUERY_STRING"];
+
+$url = $osmbugs_url . "/getRSSfeed?" . $request;
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$output = curl_exec($ch);
+$content = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+header('Content-type: '. $content);
+echo $output;
+
+curl_close($ch);
+
+?>

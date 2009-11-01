@@ -1,0 +1,41 @@
+<?php
+/*
+ * This is uses PUT
+ */
+require("config.php");
+
+//URL
+$url = $osmbugs_url . "/closePOIexec";
+
+/*
+ * Get the post vars and create a new string
+ */
+$postvars = '';
+while ($element = current($_POST)) {
+  $postvars .= key($_POST).'='.$element.'&';
+  next($_POST);
+}
+
+/*
+ * Init the curl session
+ * Set the field and exec
+ */
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$output = curl_exec($ch);
+$content = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+/*
+ * Set the content type to what we received.
+ * print the output
+ */
+header('Content-type: '. $content);
+echo $output;
+
+curl_close($ch);
+
+?>
