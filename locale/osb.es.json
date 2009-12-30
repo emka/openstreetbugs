@@ -1,31 +1,20 @@
 translation = {
-'Feel free to put the modifications you would like to see on ' : 'Puedes añadir las modificaciones que quieres que aparezcan en ',
-' on the map.' : ' en el mapa.',
-'Read and get ' : 'Leer y coger ',
-'more' : 'más',
+'Feel free to put the modifications you would like to see on {{OpenStreetMap}} on the map.' : 'Puedes añadir las modificaciones que quieres que aparezcan en {{OpenStreetMap}} en el mapa.',
+'More information' : 'Leer y coger más',
+'To add a bug, click at the desired spot in the map.' : 'Klicke auf die gewünschte Stelle auf der Karte, um einen Fehler zu markieren.',
+'According to the OpenStreetMap license, the data that you add on the map will be licensed {{License}}.' : 'De acuerdo con la licencia de OpenStreetMap, los datos que añadas al mapa serán licenciados bajo {{License}}.',
 'To add a bug, click at the desired spot in the map.' : 'Para añadir un bug, pincha en el punto deseado del mapa.',
-'According to the OpenStreetMap license, the data that you add on the
-map will be licensed ' : 'De acuerdo con la licencia de OpenStreetMap, los datos que añadas al mapa 
-serán licenciados bajo ',
 'Do NOT use licensed data' : 'NO uses datos propietarios',
-' like paper maps, Google Maps, etc. Use only your knowledge of the
-reality or public domain data.' : ' como mapas de papel, Google Maps, etc. Utiliza sólo tu conocimiento de la 
-realidad, o datos en el dominio público.',
+' like paper maps, Google Maps, etc. Use only your knowledge of the reality or public domain data.' : ' como mapas de papel, Google Maps, etc. Utiliza sólo tu conocimiento de la realidad, o datos en el dominio público.',
 'Create an Error Report' : 'Crear informe de error',
-'Please provide a short description of what\'s wrong here. You can also
-enter your nickname to show that you found the error.' : 'Introduce una corta descripción del problema que hay aquí. También puedes 
-añadir tu apodo para que se sepa que encontraste el error.',
+'Please provide a short description of what\'s wrong here. You can also enter your nickname to show that you found the error.' : 'Introduce una corta descripción del problema que hay aquí. También puedes añadir tu apodo para que se sepa que encontraste el error.',
 'Add a Comment' : 'Añadir un comentario',
 'Add comment' : 'Añadir comentario',
 'Your Comment:' : 'Tu comentario:',
 'Mark as Fixed' : 'Marcar como resuelto',
 'Mark Error as Fixed' : 'Marcar error como resuelto',
-'Do you really want to mark this error as fixed? The error will be
-deleted after a week.' : '¿Seguro que quieres marcar este error como resuelto? El error será borrado 
-tras una semana.',
-'This error has been fixed already. However, it might take a couple of
-days before the map image is updated.' : 'Este error ya está resuelto. Sin embargo, puede que pasen un par de días 
-hasta que las imágenes se actualicen.',
+'Do you really want to mark this error as fixed? The error will be deleted after a week.' : '¿Seguro que quieres marcar este error como resuelto? El error será borrado tras una semana.',
+'This error has been fixed already. However, it might take a couple of days before the map image is updated.' : 'Este error ya está resuelto. Sin embargo, puede que pasen un par de días hasta que las imágenes se actualicen.',
 'Unresolved Error' : 'Error sin resolver',
 'Fixed Error' : 'Error resuelto',
 'Your Nickname:' : 'Tu apodo:',
