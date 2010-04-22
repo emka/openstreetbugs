@@ -226,7 +226,7 @@ function init_openstreetbugs(map, server_path)
 	if (osb_server_path.charAt(osb_server_path.length-1) != "/")
 		osb_server_path += "/";
 
-	document.getElementById("map_OpenLayers_Container").style.cursor = "crosshair";
+	document.getElementById("map").style.cursor = "crosshair";
 
 	osb_layer = new OpenLayers.Layer.Markers("OpenStreetBugs");
 	osb_layer.setOpacity(0.7);
@@ -472,12 +472,12 @@ function create_marker(feature)
 	{
 		if (osb_state == 0)
 		{
-			document.getElementById("map_OpenLayers_Container").style.cursor = "pointer";
+			document.getElementById("map").style.cursor = "pointer";
 			this.createPopup(this.closeBox);
 			osb_map.addPopup(this.popup)
 		}
 		else if (osb_state != 2 && this == osb_current_feature) /* If not adding a new bug show pointer over current feature */
-			document.getElementById("map_OpenLayers_Container").style.cursor = "pointer";
+			document.getElementById("map").style.cursor = "pointer";
 
 		OpenLayers.Event.stop(ev);
 	};
@@ -485,11 +485,11 @@ function create_marker(feature)
 	{
 		if (osb_state == 0)
 		{
-			document.getElementById("map_OpenLayers_Container").style.cursor = "crosshair";
+			document.getElementById("map").style.cursor = "crosshair";
 			osb_map.removePopup(this.popup);
 		}
 		else
-			document.getElementById("map_OpenLayers_Container").style.cursor = "default";
+			document.getElementById("map").style.cursor = "default";
 		OpenLayers.Event.stop(ev);
 	};
 	/* marker_click must be registered as click and not as mousedown!
@@ -551,7 +551,7 @@ function add_bug(x, y)
 {
 	if(osb_state == 0)
 	{
-		document.getElementById("map_OpenLayers_Container").style.cursor = "default";
+		document.getElementById("map").style.cursor = "default";
 
 		osb_state = 2;
 		osb_current_feature = create_feature(x, y, popup_add_bug(x, y, get_cookie("osb_nickname")), 0);
@@ -579,7 +579,7 @@ function add_bug_submitted()
 
 function add_bug_completed()
 {
-	document.getElementById("map_OpenLayers_Container").style.cursor = "crosshair";
+	document.getElementById("map").style.cursor = "crosshair";
 
 	osb_layer.removeMarker(osb_current_feature.marker);
 	osb_map.removePopup(osb_current_feature.popup);
@@ -591,7 +591,7 @@ function add_bug_completed()
 
 function add_bug_cancel()
 {
-	document.getElementById("map_OpenLayers_Container").style.cursor = "crosshair";
+	document.getElementById("map").style.cursor = "crosshair";
 
 	osb_layer.removeMarker(osb_current_feature.marker);
 	osb_map.removePopup(osb_current_feature.popup);
@@ -660,7 +660,7 @@ function close_bug_submit(id, form)
 
 function reset_popup(id)
 {
-	document.getElementById("map_OpenLayers_Container").style.cursor = "default";
+	document.getElementById("map").style.cursor = "default";
 
 	var bug = get_bug(id);
 	if (bug.type == 0)
