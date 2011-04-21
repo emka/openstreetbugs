@@ -397,6 +397,7 @@ function refresh_sidebar()
 	}
 	document.getElementById("permalink").innerHTML = "<a href='?lon="+lon+"&lat="+lat+"&zoom="+zoom+"&layers="+layers+"'>"+_("Permalink")+"</a>";
 	document.getElementById("geofabrik").innerHTML = "<a href='http://tools.geofabrik.de/map/?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>"+_("Geofabrik Map")+"</a>";
+	document.getElementById("osmdotorg").innerHTML = "<a href='http://www.openstreetmap.org/?lon="+lon+"&lat="+lat+"&zoom="+zoom+"'>"+_("OpenStreetMap.org")+"</a>";
 }
 
 /* Check if a bug has been downloaded already.
