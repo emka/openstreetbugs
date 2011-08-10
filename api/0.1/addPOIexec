@@ -87,7 +87,7 @@ def main():
 			if dom.getElementsByTagName('name'):
 				name = dom.getElementsByTagName('name')[0].firstChild.data
 				country = dom.getElementsByTagName('countryCode')[0].firstChild.data
-				values["nearbyplace"] = "%s [%s]" % (name, country)
+				values["nearbyplace"] = "%s [%s]" % (name.encode("utf-8"), country.encode("utf-8"))
 
 
 	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
