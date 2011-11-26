@@ -75,11 +75,18 @@ def main():
 	
 	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	curs = conn.cursor()
-	querystr = "SELECT lon, lat, text, type, id FROM bugs WHERE %s%%(b)s <= lat and lat <= %%(t)s and %%(l)s <= lon and lon <= %%(r)s ORDER BY last_changed DESC" % filter
+	querystr = "SELECT id, lon, lat, text, type, last_changed, type, nearby_place FROM bugs WHERE %s%%(b)s <= lat and lat <= %%(t)s and %%(l)s <= lon and lon <= %%(r)s ORDER BY last_changed DESC" % filter
 	querystr += " LIMIT %s" % limit
 	curs.execute(querystr, values)
 	for c in curs:
-		print "<wpt lon=\"%f\" lat=\"%f\"><desc><![CDATA[%s]]></desc><extensions><closed>%s</closed><id>%s</id></extensions></wpt>" % c
+		if c[4] == 1:
+			type = "closed bug"
+		elif c[3].find("<hr />") != -1:
+                        type = "new comment"
+		else:
+			type = "new bug"
+
+		print "<wpt lon=\"%f\" lat=\"%f\"><name><![CDATA[ %s (near %s)]]></name><desc><![CDATA[%s]]></desc><extensions><closed>%s</closed><id>%s</id></extensions></wpt>" % (c[1], c[2], type, c[7].encode("utf-8"), c[3], c[6], c[0] )
 	
 	print "</gpx>"
 
