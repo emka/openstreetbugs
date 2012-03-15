@@ -21,8 +21,6 @@ function init_map(div_id, lon, lat, zoom)
 	map.addLayer(layerMapnik);
 	var layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
 	map.addLayer(layerCycleMap);
-	var layerTilesAtHome = new OpenLayers.Layer.OSM.Osmarender("Osmarender");
-	map.addLayer(layerTilesAtHome);
 
 	map.setCenter(new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()), zoom);
 
