@@ -27,3 +27,7 @@ Content-language: pt
 URI: osb.es.json
 Content-type: application/json; charset=utf-8
 Content-language: es
+
+URI: osb.pl.json
+Content-type: application/json; charset=utf-8
+Content-language: pl
