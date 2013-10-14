@@ -213,6 +213,9 @@ var osb_bugs = new Array();
 var osb_state = 0;
 var osb_current_feature = null;
 
+/* cursor display over the map */
+/* disabled --> default cursor, active --> crosshair */
+var map_cursor = "default"
 
 /* Call this method to activate openstreetbugs on the map.
  * The argument map must refer to an Openlayers.Map object. The
@@ -226,7 +229,7 @@ function init_openstreetbugs(map, server_path)
 	if (osb_server_path.charAt(osb_server_path.length-1) != "/")
 		osb_server_path += "/";
 
-	document.getElementById("map").style.cursor = "crosshair";
+	document.getElementById("map").style.cursor = map_cursor;
 
 	osb_layer = new OpenLayers.Layer.Markers("OpenStreetBugs");
 	osb_layer.setOpacity(0.7);
@@ -486,7 +489,7 @@ function create_marker(feature)
 	{
 		if (osb_state == 0)
 		{
-			document.getElementById("map").style.cursor = "crosshair";
+			document.getElementById("map").style.cursor = map_cursor;
 			osb_map.removePopup(this.popup);
 		}
 		else
@@ -537,7 +540,8 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 
 	click: function(ev) {
 		var lonlat = osb_map.getLonLatFromViewPortPx(ev.xy);
-		add_bug(lonlat.lon, lonlat.lat);
+		/* disabled adding new bugs */
+		/*add_bug(lonlat.lon, lonlat.lat);*/
 	},
 
 	CLASS_NAME: "OpenLayers.Control.Click"
@@ -580,7 +584,7 @@ function add_bug_submitted()
 
 function add_bug_completed()
 {
-	document.getElementById("map").style.cursor = "crosshair";
+	document.getElementById("map").style.cursor = map_cursor;
 
 	osb_layer.removeMarker(osb_current_feature.marker);
 	osb_map.removePopup(osb_current_feature.popup);
@@ -592,7 +596,7 @@ function add_bug_completed()
 
 function add_bug_cancel()
 {
-	document.getElementById("map").style.cursor = "crosshair";
+	document.getElementById("map").style.cursor = map_cursor;
 
 	osb_layer.removeMarker(osb_current_feature.marker);
 	osb_map.removePopup(osb_current_feature.popup);
