@@ -63,7 +63,7 @@ def main():
 		result = cursor.fetchone()
 		month = datetime.strftime(result[0],"%b %Y")
 		newbugs = result[1]
-		cursor.execute("""SELECT COUNT(*) as closedbugs FROM bugs WHERE last_changed < DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL """+"%d"%interval+""" MONTH), "%Y-%m-01") AND last_changed >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL """+"%d"%(interval+1)+""" MONTH), "%Y-%m-01");""")
+		cursor.execute("""SELECT COUNT(*) as closedbugs FROM bugs WHERE type <> 0 and last_changed < DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL """+"%d"%interval+""" MONTH), "%Y-%m-01") AND last_changed >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL """+"%d"%(interval+1)+""" MONTH), "%Y-%m-01");""")
 		result = cursor.fetchone()
 		closedbugs = result[0]
 		print "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (month, newbugs, closedbugs)
