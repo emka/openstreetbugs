@@ -40,10 +40,11 @@ def main():
 	connection = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
 	cursor = connection.cursor()
 	cursor.execute("SELECT type,COUNT(*) FROM bugs GROUP BY type;")
-	result = cursor.fetchall()
-	bugcount = {}
-	bugcount["open"] = result[0][1]
-	bugcount["closed"] = result[1][1]
+	result = dict(cursor.fetchall())
+	bugcount = {"open":0}
+	if 0 in result:
+		bugcount["open"] = result[0]
+	bugcount["closed"] = result[1]
 	bugcount["total"] = bugcount["open"] + bugcount["closed"]
 
 	print """<table border="1">
