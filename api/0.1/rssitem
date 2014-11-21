@@ -50,7 +50,8 @@ def main():
 	else:
 		id = long(id)
 	
-	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname)
+	conn = MySQLdb.connect(db_config.host, user=db_config.user, passwd=db_config.password, db=db_config.dbname,
+			       charset = "utf8", use_unicode = True)
 	curs = conn.cursor()
 	curs.execute("SELECT lon, lat, text, type, last_changed FROM bugs WHERE id = %s LIMIT 1", id)
 	for c in curs:
