@@ -27,13 +27,14 @@
 CREATE DATABASE `osb`;
 
 CREATE TABLE `bugs` (
-	`id` bigint(20) unsigned NOT NULL auto_increment,
-	`lon` double default NULL,
-	`lat` double default NULL,
-	`text` mediumtext,
-	`type` int(11) default NULL,
-	`last_changed` datetime default NULL,
-	`date_created` datetime default NULL,
-	`nearby_place` text,
-	PRIMARY KEY  (`id`)
-);
+`id` bigint(20) unsigned NOT NULL auto_increment,
+`lon` double default NULL,
+`lat` double default NULL,
+`text` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+`type` int(11) default NULL,
+`last_changed` datetime default NULL,
+`date_created` datetime default NULL,
+`nearby_place` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+PRIMARY KEY (`id`)
+)
+CHARACTER SET utf8 COLLATE utf8_unicode_ci;
